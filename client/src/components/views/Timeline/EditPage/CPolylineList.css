@@ -1,0 +1,17 @@
+.table-rows tr:nth-child(even) td{
+    background-color: white;
+}
+
+.header{
+    display: flex;
+    justify-content: space-between;
+}
+
+.header-date{
+    margin: 0px 20px;
+    font-size: 20px;
+}
+
+.header-checkbox{
+    margin: 0px 20px;
+}
