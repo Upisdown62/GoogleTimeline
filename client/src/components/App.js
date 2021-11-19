@@ -39,7 +39,7 @@ function App() {
           <Route exact path="/timelineUpload" component={Auth(TimelineUploadPage, true)} />
         </Switch>
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </Suspense>
   );
 }

@@ -50,8 +50,8 @@ function PolylineList(props) {
           key: cur.index,
           index: cur.index,
           type: cur.activityType,
-          from: cur.startTime,
-          to: cur.endTime,
+          from: Moment(cur.startTime).format('HH:mm:ss'),
+          to: Moment(cur.endTime).format('HH:mm:ss'),
           location: '-'
         })
       } else{
@@ -59,8 +59,8 @@ function PolylineList(props) {
           key: cur.index,
           index: cur.index,
           type: cur.visitType,
-          from: cur.startTime,
-          to: cur.endTime,
+          from: Moment(cur.startTime).format('HH:mm:ss'),
+          to: Moment(cur.endTime).format('HH:mm:ss'),
           location: cur.name
         })
       }

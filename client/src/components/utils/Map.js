@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react'
 import _ from 'lodash';
+import { useSelector } from 'react-redux'
 
 /*
     placeId: nullable
@@ -50,7 +51,7 @@ function Map(props) {
         center: new kakaoAPI.LatLng(37.5559908, 126.9741218), //지도의 중심좌표.
         level: level.current, //지도의 레벨(확대, 축소 정도)
     }
-    
+    const POLYLINE = useSelector(state => state.polyline.polyline)
 
     useEffect(() => {
         setMap(new kakaoAPI.Map(container.current, options)) //지도 생성 및 객체 리턴
@@ -61,6 +62,10 @@ function Map(props) {
     }, [props.polyline])
 
     useEffect(() => {
+        POLYLINE && setCurData(POLYLINE)
+    }, [POLYLINE])
+
+    useEffect(() => {
         onClearMap()
     }, [CurData])
 
@@ -69,7 +74,7 @@ function Map(props) {
     }, [MapFlag])
 
     useEffect(() => {
-        if(CurPolylineIdx) {
+        if(CurPolylineIdx && props.polyline) {
             props.updateSelectedIdx(CurPolylineIdx)
         }
     }, [CurPolylineIdx])
@@ -210,9 +215,9 @@ function Map(props) {
                 style={{ width: "500px", height: "500px" }}
                 ref={container}
             ></div>
-            <button onClick={onTest}>
+            {/* <button onClick={onTest}>
                 테스트용
-            </button>
+            </button> */}
         </div>
   )
 }

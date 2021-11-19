@@ -110,7 +110,7 @@ router.post('/save', (req, res) => {
                 "title":"",
                 "description":"",
                 "useFlag":true,
-                "index":index
+                "index":index+1
             }
             if(cur.activitySegment !== undefined){ 
                 let trackPoint = []
@@ -217,11 +217,17 @@ router.post('/save', (req, res) => {
 
 router.post('/update', (req, res) => {
     let id = req.body.id
-    console.log('>> id',id)
+    //console.log('>> id',id)
 
     Timeline.findOneAndUpdate(
         { _id: { $in: id}},
-        { $set: { "title":req.body.title, "description":req.body.description, "image":req.body.image}},
+        { $set: { "title":req.body.title, 
+                    "useFlag": req.body.useFlag,
+                    "name": req.body.name,
+                    "startTime": req.body.startTime,
+                    "endTime": req.body.endTime,
+                    "description":req.body.description, 
+                    "image":req.body.image}},
         { new : true },
         (err, timelineInfo) => {
             console.log(timelineInfo)
@@ -236,7 +242,7 @@ const calcDate = (timestamp) => {
     return moment(Number(timestamp)).format('YYYY-MM-DD') 
 }
 const calcDateTime = (timestamp) => {
-    return moment(Number(timestamp)).format('YYYY-MM-DD HH:MM:DD')
+    return moment(Number(timestamp)).format('YYYY-MM-DD HH:mm:ss')
 }
 
 

@@ -8,10 +8,13 @@ import MCard from '../utils/MCard'
 
 function MVerticalTimeline() {
   const polyline = useSelector(state => state.polyline.polyline)
+  const [isData, setIsData] = useState(false)
   const [images, setImages] = useState([])
 
   useEffect(() => {
-    console.log('>>>> polyline' , polyline)
+    if(polyline && polyline.length !== 0) setIsData(true)
+    else setIsData(false)
+    console.log('>>> polyline', polyline)
   }, [polyline])
 
     useEffect(() => {
@@ -27,44 +30,36 @@ function MVerticalTimeline() {
 
     return (
         <div>
-          <VerticalTimeline
-            layout='1-column-left'
-            lineColor='rgb(33, 150, 243)'
-            >
-            <VerticalTimelineElement
-                  className="vertical-timeline-element--work"
-                  iconStyle={{ background: "rgb(33, 150, 243)", color: "#fff" }}
-                  icon={<MapIcon />}
-                  >
-                    <div style={{height:'300px'}}>
-                      <div style={{float:'left', width:'300px', margin: '10px' }}>
-                        <ImageSlider images={images}/>
-                      </div>
-                      <div style={{float:'left',  width:'600px', margin: '10px'}}>
-                        <MCard
-                          />
-                      </div>
-                    </div>
-                </VerticalTimelineElement>
-            {polyline && polyline.map((cur) => (
-                <VerticalTimelineElement
-                  className="vertical-timeline-element--work"
-                  iconStyle={{ background: "rgb(33, 150, 243)", color: "#fff" }}
-                  icon={<MapIcon />}
-                  >
-                    <div style={{height:'300px'}}>
-                      <div style={{float:'left', width:'300px', margin: '10px' }}>
-                        <ImageSlider images={images}/>
-                      </div>
-                      <div style={{float:'left',  width:'600px', margin: '10px'}}>
-                        <MCard
-                          polyline={cur}
-                          />
-                      </div>
-                    </div>
-                </VerticalTimelineElement>
-            ))}
-          </VerticalTimeline>
+          {isData ? 
+            <VerticalTimeline
+              layout='1-column-left'
+              lineColor='rgb(33, 150, 243)'
+              >
+              {polyline.map((cur) => (
+                <>
+                  {cur.useFlag === true ? 
+                    <VerticalTimelineElement
+                      key={cur._id}
+                      className="vertical-timeline-element--work"
+                      iconStyle={{ background: "rgb(33, 150, 243)", color: "#fff" }}
+                      icon={<MapIcon />}
+                      >
+                        <div style={{height:'300px'}}>
+                          <div style={{float:'left', width:'300px', margin: '10px' }}>
+                            <ImageSlider images={images}/>
+                          </div>
+                          <div style={{float:'left',  width:'600px', margin: '10px'}}>
+                            <MCard
+                              polyline={cur}
+                              />
+                          </div>
+                        </div>
+                    </VerticalTimelineElement>
+                  : <></>}
+                </>
+              ))}
+            </VerticalTimeline>
+            : <>유튜브 링크</>}
         </div>
     )
 }
