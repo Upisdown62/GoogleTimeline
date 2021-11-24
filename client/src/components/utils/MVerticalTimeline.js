@@ -5,11 +5,11 @@ import MapIcon from '@material-ui/icons/Map'
 import { useDispatch, useSelector } from 'react-redux'
 import ImageSlider from '../utils/ImageSlider'
 import MCard from '../utils/MCard'
+import NoImage from '../../images/noImage.jpg'
 
 function MVerticalTimeline() {
   const polyline = useSelector(state => state.polyline.polyline)
   const [isData, setIsData] = useState(false)
-  const [images, setImages] = useState([])
 
   useEffect(() => {
     if(polyline && polyline.length !== 0) setIsData(true)
@@ -17,15 +17,6 @@ function MVerticalTimeline() {
     console.log('>>> polyline', polyline)
   }, [polyline])
 
-    useEffect(() => {
-        const temp = []
-        temp.push('uploads\\1636010197784_17ddc8b55a0a59f56f68ad13bc8b9ba9.jpg')
-        temp.push('uploads\\1636010197836_Desert.jpg')
-        temp.push('uploads\\1636010197862_fe78fc7d0374f00b2469f305e8437b19.jpg')
-        temp.push('uploads\\1636010197864_placeimg_640_480_any.jpg')
-        temp.push('uploads\\1636010197884_placeimg_640_800_any.jpg')
-        setImages(temp)
-    }, [])
 
 
     return (
@@ -46,7 +37,8 @@ function MVerticalTimeline() {
                       >
                         <div style={{height:'300px'}}>
                           <div style={{float:'left', width:'300px', margin: '10px' }}>
-                            <ImageSlider images={images}/>
+                            {cur.image.length !== 0 ? <ImageSlider images={cur.image}/> : 
+                            <img src={NoImage} alt="No Images!"/>}
                           </div>
                           <div style={{float:'left',  width:'600px', margin: '10px'}}>
                             <MCard
@@ -59,7 +51,16 @@ function MVerticalTimeline() {
                 </>
               ))}
             </VerticalTimeline>
-            : <>유튜브 링크</>}
+            : 
+            <>
+              <iframe 
+                width="560" 
+                height="315" 
+                src="https://www.youtube.com/embed/A00zLudc9EM" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen></iframe>
+            </>}
         </div>
     )
 }

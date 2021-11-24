@@ -27,7 +27,7 @@ function MCalendar() {
     }
 
     const load = () => {
-        let ownerId // = '60ebc420fa93841d7042c1af'
+        let ownerId
         ownerId = _.get(user.userData, '_id')
         const body = {
             owner: ownerId
@@ -37,7 +37,7 @@ function MCalendar() {
     }
 
     useEffect(() => {
-        let ownerId // = '60ebc420fa93841d7042c1af'
+        let ownerId
         ownerId = _.get(user.userData, '_id')
         const body = {
             owner: ownerId

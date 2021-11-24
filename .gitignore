@@ -1,9 +1,12 @@
 /node_modules
 /build
 
+/uploads
+/uploadsjson
+
 dev.js
 
-
+.env
 
 .DS_Store
 

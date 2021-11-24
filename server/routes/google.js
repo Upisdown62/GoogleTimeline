@@ -6,7 +6,7 @@ const { auth } = require("../middleware/auth");
 const { OAuth2Client } = require('google-auth-library')
 const async = require('async')
 
-const client = new OAuth2Client("378319837757-k4cm4ghl2rmmg0klj0n3ke00ql4riubi.apps.googleusercontent.com")
+const client = new OAuth2Client(process.env.REACT_APP_GOOGLE_API_KEY)
 //=================================
 //             Google
 //=================================
@@ -16,7 +16,7 @@ router.post("/login", (req, res) => {
     const { tokenId } = req.body.data
     //console.log('google router:: ', tokenId)
 
-    client.verifyIdToken({idToken: tokenId, audience: "378319837757-k4cm4ghl2rmmg0klj0n3ke00ql4riubi.apps.googleusercontent.com"})
+    client.verifyIdToken({idToken: tokenId, audience: process.env.REACT_APP_GOOGLE_API_KEY})
     .then(response => {
         const { email_verified, email, picture } = response.payload
         console.log('==========\n',response.payload)

@@ -25,7 +25,7 @@ router.post('/', (req, res) =>{
 
 router.post('/update', (req, res) =>{
     let userId = req.body.owner
-    console.log('>> userId',userId)
+    //console.log('>> userId',userId)
     Calendar.findOneAndUpdate(
         { owner: { $in: userId}, date:{$elemMatch:{date:req.body.date}}},
         { $set: {"date.$.useFlag":req.body.flag}},

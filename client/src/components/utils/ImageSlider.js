@@ -9,7 +9,7 @@ function ImageSlider(props) {
             {props.images.map((image, index) => (
                 <div key={index}>
                     <img style={{width:'100%', maxHeight:'300px'}}
-                        src={`http://localhost:5000/${image}`}/>
+                        src={`${image}`}/>
                 </div>
             ))}
         </Carousel>

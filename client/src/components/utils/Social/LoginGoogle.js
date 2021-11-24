@@ -5,7 +5,7 @@ import { useHistory } from "react-router";
 
 
 function LoginGoogle(){
-    const clientId = "378319837757-k4cm4ghl2rmmg0klj0n3ke00ql4riubi.apps.googleusercontent.com"
+    const clientId = process.env.REACT_APP_GOOGLE_API_KEY
     const history = useHistory()
     
     const onSuccess = async(response) => {
