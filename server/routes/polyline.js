@@ -7,6 +7,7 @@ const { User } = require("../models/User")
 const { Timeline } = require('../models/Timeline')
 const { Calendar } = require('../models/Calendar')
 const lodash = require('lodash')
+const mongoose = require('mongoose')
 
 
 //=================================
@@ -237,6 +238,29 @@ router.post('/update', (req, res) => {
                 timelineInfo
             })
         })
+})
+
+router.post('/updateFlag', (req, res) => {
+    let body = req.body
+    let idList = []
+    body.map((cur) => (
+        idList.push(mongoose.Types.ObjectId(cur))
+    ))
+    Timeline.bulkWrite(
+        body.map((cur) => ({
+            updateOne:{
+                filter: { _id: cur},
+                update: { $set: {"useFlag": false}}
+            }
+        })),
+        (err, timelineInfo) => {
+            if(err) return res.status(400).json({success:false, err})
+            return res.status(200).json({
+                success:true,
+                timelineInfo
+            })
+        }
+    )
 })
 const calcDate = (timestamp) => {
     return moment(Number(timestamp)).format('YYYY-MM-DD') 

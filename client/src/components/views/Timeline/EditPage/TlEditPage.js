@@ -106,7 +106,8 @@ function TlEditPage(props) {
                         calendar={CalendarDate}
                         date={CurDate}
                         updateSelectedIdx={onSetLine}
-                        updateCalendar={onSetCalendar}
+                        updateCalendar={onSetCalendar}                        
+                        updateSave={loadPolylineList}
                     />
                 </div>
             </div>

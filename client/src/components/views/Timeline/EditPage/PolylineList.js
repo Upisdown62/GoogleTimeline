@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Table } from 'antd'
+import { Table, Button } from 'antd'
 import './CPolylineList.css'
 import Moment from 'moment'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
@@ -31,7 +31,12 @@ const columns = [
   },
   {
     title: '방문장소',
-    dataIndex: 'location'
+    dataIndex: 'location',
+    width: 140
+  },
+  {
+    title: '사용여부',
+    dataIndex: 'useFlag'
   }
 ]
 
@@ -40,6 +45,7 @@ function PolylineList(props) {
   const [CurDate, setCurDate] = useState()
   const [UseDateFlag, setUseDateFlag] = useState(false) //해당날짜 사용여부 체크필드
   const [DisableFlag, setDisableFlag] = useState(true) //데이터가 없으면 사용여부 체크필드를 비활성화
+  const [allUpdateList, setAllUpdateList] = useState([]) //일괄 비활성화를 위한 변수
   const user = useSelector(state => state.user)
 
   useEffect(() => {
@@ -47,21 +53,23 @@ function PolylineList(props) {
     props.polyline && props.polyline.map((cur) => {
       if(cur.visitType==="MOVE"){
         data.push({
-          key: cur.index,
+          key: cur._id,
           index: cur.index,
           type: cur.activityType,
           from: Moment(cur.startTime).format('HH:mm:ss'),
           to: Moment(cur.endTime).format('HH:mm:ss'),
-          location: '-'
+          location: '-',
+          useFlag: cur.useFlag ? 'True' : 'False'
         })
       } else{
         data.push({
-          key: cur.index,
+          key: cur._id,
           index: cur.index,
           type: cur.visitType,
           from: Moment(cur.startTime).format('HH:mm:ss'),
           to: Moment(cur.endTime).format('HH:mm:ss'),
-          location: cur.name
+          location: cur.name,
+          useFlag: cur.useFlag ? 'True' : 'False'
         })
       }
     })
@@ -85,6 +93,18 @@ function PolylineList(props) {
 
   const onRowClickHandler = (state) => {
     props.updateSelectedIdx(state.index)
+  }
+
+  const onClickAllFalse = () => {
+    axios.post("/api/polyline/updateFlag", allUpdateList)
+    .then(response => {
+      if(response.data.success){
+          alert('데이터를 저장하였습니다!')
+          props.updateSave()
+      } else{
+          alert('데이터 저장에 실패했습니다!')
+      }
+    })
   }
 
   const handleChange = () => {
@@ -115,6 +135,11 @@ function PolylineList(props) {
             <span className="header-date">
               {`날짜 : ${CurDate}`}
             </span>
+            <span>
+              <Button type="default" onClick={onClickAllFalse}>
+                  일괄비활성화
+              </Button>
+            </span>
             <span className="header-checkbox">
               <FormControlLabel
                 control={
@@ -132,6 +157,12 @@ function PolylineList(props) {
           </div>
           <div className="detail">
             <Table
+              rowSelection={{
+                type: 'checkbox',
+                onChange: (selectedRowKeys) => {
+                  setAllUpdateList(selectedRowKeys)
+                }
+              }}
               className="table-rows"
               columns={columns} 
               dataSource={CurPolylineList} 

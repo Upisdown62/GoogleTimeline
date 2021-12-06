@@ -30,7 +30,7 @@ function Polyline(props) {
 
     useEffect(() => {
         if(CurData) {
-            console.log('CurData >> ', CurData)
+            //console.log('CurData >> ', CurData)
             const tempIdx = _.get(CurData[0], 'index', '항목을 선택하세요')            
             setHeaderText(`# ${tempIdx}`)
             setDate(_.get(CurData[0], 'date'))

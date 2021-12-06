@@ -120,6 +120,7 @@ function Map(props) {
         let maxLng = -1000
         CurData && CurData.map((cur) => {
             //console.log(cur)
+            if(!cur.useFlag) return
             if(cur.visitType === 'STAY'){
                 let marker = new kakaoAPI.Marker({
                     map: Map,

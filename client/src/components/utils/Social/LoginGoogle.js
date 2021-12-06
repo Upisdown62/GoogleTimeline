@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import GoogleLogin from 'react-google-login';
 import axios from 'axios'
 import { useHistory } from "react-router";
 
 
 function LoginGoogle(){
-    const clientId = process.env.REACT_APP_GOOGLE_API_KEY
+    const clientId = useRef(process.env.REACT_APP_GOOGLE_API_KEY)
     const history = useHistory()
     
     const onSuccess = async(response) => {
@@ -47,7 +47,7 @@ function LoginGoogle(){
     return(
         <div>
             <GoogleLogin
-                clientId={clientId}
+                clientId={clientId.current}
                 onSuccess={onSuccess}
                 onFailure={onFailure}
                 cookiePolicy="single_host_origin"
