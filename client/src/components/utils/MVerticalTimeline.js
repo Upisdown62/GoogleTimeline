@@ -14,7 +14,7 @@ function MVerticalTimeline() {
   useEffect(() => {
     if(polyline && polyline.length !== 0) setIsData(true)
     else setIsData(false)
-    console.log('>>> polyline', polyline)
+    //console.log('>>> polyline', polyline)
   }, [polyline])
 
 

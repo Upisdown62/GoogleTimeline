@@ -1,6 +1,8 @@
+/* global kakao */
 import React, { useRef, useEffect, useState } from 'react'
 import _ from 'lodash';
 import { useSelector } from 'react-redux'
+const { kakao } = window
 
 /*
     placeId: nullable
@@ -37,7 +39,7 @@ const MAXLNG = 140
 const MINLNG = 120
 
 function Map(props) {
-    const kakaoAPI = window.kakao.maps
+    //const kakaoAPI = window.kakao.maps
     const [Map, setMap] = useState()
     const [CurData, setCurData] = useState()
     const [CurPolylineIdx, setCurPolylineIdx] = useState()
@@ -46,15 +48,25 @@ function Map(props) {
     const [MarkerList, setMarkerList] = useState([])
     const container = useRef(null) //지도를 담을 영역의 DOM 레퍼런스
     const level = useRef(8)
-    const options = {
-        //지도를 생성할 때 필요한 기본 옵션
-        center: new kakaoAPI.LatLng(37.5559908, 126.9741218), //지도의 중심좌표.
-        level: level.current, //지도의 레벨(확대, 축소 정도)
-    }
+    // const options = {
+    //     //지도를 생성할 때 필요한 기본 옵션
+    //     center: new kakaoAPI.LatLng(37.5559908, 126.9741218), //지도의 중심좌표.
+    //     level: level.current, //지도의 레벨(확대, 축소 정도)
+    // }
     const POLYLINE = useSelector(state => state.polyline.polyline)
 
+    // useEffect(() => {
+    //     setMap(new kakaoAPI.Map(container.current, options)) //지도 생성 및 객체 리턴
+    // }, [])
+
     useEffect(() => {
-        setMap(new kakaoAPI.Map(container.current, options)) //지도 생성 및 객체 리턴
+        const container = document.getElementById("myMap")
+		const options = {
+			center: new kakao.maps.LatLng(37.5559908, 126.9741218),
+			level: level.current, //지도의 레벨(확대, 축소 정도)
+		}
+        const map = new kakao.maps.Map(container, options)
+        setMap(map)
     }, [])
 
     useEffect(() => {
@@ -104,7 +116,7 @@ function Map(props) {
             else level = 12
 
             Map.setLevel(level)
-            Map.setCenter(new kakaoAPI.LatLng(lat, lng))
+            Map.setCenter(new kakao.maps.LatLng(lat, lng))
         }
     }
     const onTest = () => {
@@ -122,9 +134,9 @@ function Map(props) {
             //console.log(cur)
             if(!cur.useFlag) return
             if(cur.visitType === 'STAY'){
-                let marker = new kakaoAPI.Marker({
+                let marker = new kakao.maps.Marker({
                     map: Map,
-                    position: new kakaoAPI.LatLng(cur.point[0].lat , cur.point[0].lng),
+                    position: new kakao.maps.LatLng(cur.point[0].lat , cur.point[0].lng),
                     title: cur.name
                 })
                 maxLat = cur.point[0].lat > maxLat ? cur.point[0].lat : maxLat
@@ -132,7 +144,7 @@ function Map(props) {
                 maxLng = cur.point[0].lng > maxLng ? cur.point[0].lng : maxLng
                 minLng = cur.point[0].lng < minLng ? cur.point[0].lng : minLng
 
-                kakaoAPI.event.addListener(marker, 'click', function() {
+                kakao.maps.event.addListener(marker, 'click', function() {
                     setCurPolylineIdx(cur.index)
                 })
                 //marker.setMap(Map)
@@ -140,7 +152,7 @@ function Map(props) {
             } else {
                 let pathPoint = []
                 cur.point.map((p) => {
-                    pathPoint.push(new kakaoAPI.LatLng(p.lat, p.lng))
+                    pathPoint.push(new kakao.maps.LatLng(p.lat, p.lng))
 
                     maxLat = p.lat > maxLat ? p.lat : maxLat
                     minLat = p.lat < minLat ? p.lat : minLat
@@ -168,7 +180,7 @@ function Map(props) {
                     default:
                         break;
                 }
-                let polyline = new kakaoAPI.Polyline({
+                let polyline = new kakao.maps.Polyline({
                     map: Map,
                     path: pathPoint,
                     strokeWeight: 6,
@@ -178,7 +190,7 @@ function Map(props) {
                     endArrow: true
                 })                
                 
-                kakaoAPI.event.addListener(polyline, 'mouseover', function(mouseEvent) {  
+                kakao.maps.event.addListener(polyline, 'mouseover', function(mouseEvent) {  
                     polyline.setOptions({
                         strokeWeight: 10,
                         strokeColor: polylineColor,
@@ -187,7 +199,7 @@ function Map(props) {
                     })       
                 })
                 
-                kakaoAPI.event.addListener(polyline, 'mouseout', function(mouseEvent) {  
+                kakao.maps.event.addListener(polyline, 'mouseout', function(mouseEvent) {  
                     polyline.setOptions({
                         strokeWeight: 6,
                         strokeColor: polylineColor,
@@ -196,7 +208,7 @@ function Map(props) {
                     })
                 })
 
-                kakaoAPI.event.addListener(polyline, 'click', function(mouseEvent) {  
+                kakao.maps.event.addListener(polyline, 'click', function(mouseEvent) {  
                     setCurPolylineIdx(cur.index)        
                 })
                 tempPolyline.push(polyline)
@@ -212,6 +224,7 @@ function Map(props) {
     return (
         <div>
             <div
+                id="myMap"
                 className="map"
                 style={{ width: "500px", height: "500px" }}
                 ref={container}

@@ -23,6 +23,7 @@ router.post('/datas', (req, res) =>{
     Timeline.find({ owner: { $in: userId}, date: inputDate})
         .exec((err, polylineInfo) => {
             if(err) return res.status(400).json({success:false, err})
+            console.log(`[polyline.datas] userId:${userId}\npolyline:${polylineInfo}`)
             return res.status(200).json({
                 success:true,
                 polylineInfo:polylineInfo
@@ -60,6 +61,7 @@ router.post('/image', (req, res) => {
         if(err){
             return res.status(400).json({ success:false, err})
         }
+        console.log(`[polyline.image] Image Upload`)
         return res.status(200).json({
             success:true, 
             files: req.files
@@ -84,7 +86,7 @@ router.post('/vaildation', (req, res) => {
         if(err){
             return res.status(400).json({ success:false, err})
         }
-
+        console.log(`[polyline.vaildation] Json Data Upload`)
         return res.status(200).json({
             success:true, 
             files: req.files
@@ -169,7 +171,7 @@ router.post('/save', (req, res) => {
             })
             //save도 비동기돌고 있는것 같아서 사실 이렇게하면 안됨
             uploadCnt += 1
-
+            console.log(`[polyline.save] Json Data Save\n Count: ${uploadCnt}`)
             calendarDate.push({
                 "date":data.date,
                 "useFlag":true
@@ -181,7 +183,7 @@ router.post('/save', (req, res) => {
     Calendar.find(
         { owner: req.body.userId },
         (err, calendarInfo) => {
-            console.log('calendarInfo >>', calendarInfo)
+            //console.log('calendarInfo >>', calendarInfo)
             if (err) return res.status(400).json({ success: false, err })
                         
             if(calendarInfo.length === 0){
@@ -233,6 +235,7 @@ router.post('/update', (req, res) => {
         (err, timelineInfo) => {
             console.log(timelineInfo)
             if(err) return res.status(400).json({success:false, err})
+            console.log(`[polyline.update] Line Data Update ${id}`)
             return res.status(200).json({
                 success:true,
                 timelineInfo
@@ -255,6 +258,7 @@ router.post('/updateFlag', (req, res) => {
         })),
         (err, timelineInfo) => {
             if(err) return res.status(400).json({success:false, err})
+            console.log(`[polyline.updateFlag] Use Flag Update`)
             return res.status(200).json({
                 success:true,
                 timelineInfo

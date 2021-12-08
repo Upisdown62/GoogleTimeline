@@ -51,7 +51,7 @@ function MCalendar() {
                 })
                 setHighlightArray(tempArray)
             } else {
-                alert("달력 데이터를 가져오는데 실패했습니다")
+                //alert("달력 데이터를 가져오는데 실패했습니다")
             }
         })
     }, [user.userData])

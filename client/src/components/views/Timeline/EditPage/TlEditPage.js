@@ -52,7 +52,7 @@ function TlEditPage(props) {
             if(response.data.success && response.data.calendarInfo.length !== 0){
                 setCalendarDate(response.data.calendarInfo[0].date)
             } else {
-                alert("달력 데이터를 가져오는데 실패했습니다")
+                //alert("달력 데이터를 가져오는데 실패했습니다")
             }
         })
     }

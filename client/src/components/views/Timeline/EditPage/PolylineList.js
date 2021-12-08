@@ -118,7 +118,7 @@ function PolylineList(props) {
     axios.post('/api/calendar/update', body)
     .then(response => {
       if(response.data.success){
-        console.log(response.data.calendarInfo.date)
+        //console.log(response.data.calendarInfo.date)
         props.updateCalendar(response.data.calendarInfo.date)
       }
       else {
