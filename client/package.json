@@ -44,8 +44,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "start_aws": "react-scripts --openssl-legacy-provider start",
-    "build_aws": "react-scripts --openssl-legacy-provider build",
+    "start_aws": "react-scripts --max_old_space_size=4096 --openssl-legacy-provider start",
+    "build_aws": "react-scripts --max_old_space_size=4096 --openssl-legacy-provider build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
