@@ -32,7 +32,7 @@ router.post("/register", (req, res) => {
 
     user.save((err, doc) => {
         if (err) return res.json({ success: false, err });
-        console.log(`[users.register] userId:${req.user.email}`)
+        console.log(`[users.register] user:${user}`)
         return res.status(200).json({
             success: true
         });
@@ -54,7 +54,7 @@ router.post("/login", (req, res) => {
             user.generateToken((err, user) => {
                 if (err) return res.status(400).send(err);
                 res.cookie("w_authExp", user.tokenExp);
-                console.log(`[users.login] userId:${req.user.email}`)
+                console.log(`[users.login] userId:${req.body.email}`)
                 res
                     .cookie("w_auth", user.token)
                     .status(200)
