@@ -30,7 +30,7 @@ const connect = mongoose.connect(config.mongoURI,
 app.use(bodyParser.urlencoded({ extended: true }));
 //to get json data
 // support parsing of application/json type post data
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: 5000000}));
 app.use(cookieParser());
 
 app.use('/api/users', require('./routes/users'));
@@ -48,7 +48,7 @@ app.use('/uploadsjson', express.static('uploadsjson'));
 
 // Serve static assets if in production
 if (process.env.NODE_ENV === "production") {
-
+  console.log(`Server Starting Production....`)
   // Set static folder   
   // All the javascript and css files will be read and served from this folder
   app.use(express.static("client/build"));
