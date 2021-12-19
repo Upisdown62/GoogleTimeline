@@ -36,7 +36,7 @@ function FileUpload(props) {
                     newImgPath.push(cur)
                 ))
                 response.data.files.map((cur) => {
-                    newImgPath.push(`http://localhost:5000/${cur.path}`)
+                    newImgPath.push(`${process.env.REACT_APP_SERVER_HOST}/${cur.path}`)
                 })
                 //setImagePath(newImgPath)
                 props.updateImg(newImgPath)

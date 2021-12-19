@@ -17,6 +17,7 @@ function MainPage() {
                 paddingTop: '10px',
                 background: '#ffffff'}}>
                 <div>당신의 동선을 기록해보세요!</div>
+                <div>{process.env.REACT_APP_SERVER_HOST}</div>
                 <MCalendar/>
             </div>
             <div className="left-area"
