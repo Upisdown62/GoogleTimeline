@@ -46,7 +46,7 @@ router.post('/', (req, res) => {
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, 'uploads')
+      cb(null, './uploads/')
     },
     filename: function (req, file, cb) {
       cb(null, `${Date.now()}_${file.originalname}`)
@@ -71,7 +71,7 @@ router.post('/image', (req, res) => {
 
 var storageJson = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, 'uploadsjson')
+      cb(null, './uploadsjson/')
     },
     filename: function (req, file, cb) {
       cb(null, `${Date.now()}_${file.originalname}`)
@@ -82,7 +82,7 @@ var uploadJson = multer({ storage: storageJson }).array("file", 100)
 
 router.post('/vaildation', (req, res) => {
     uploadJson(req, res, err => {
-        //console.log('======================', req.files)
+        console.log('======================', req.files)
         if(err){
             return res.status(400).json({ success:false, err})
         }

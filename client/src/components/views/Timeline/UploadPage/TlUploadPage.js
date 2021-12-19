@@ -63,7 +63,7 @@ function TlUploadPage(props) {
           newPath.push(cur.path)
         })
         setFilePath(newPath)
-        console.log('>>>>>>> newPath' ,newPath)
+        //console.log('>>>>>>> newPath' ,newPath)
         setVaild(true)
     } else{
         alert('파일 검증 오류!')
