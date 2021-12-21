@@ -44,6 +44,7 @@ app.use('/api/polyline', require('./routes/polyline'));
 //use this to show the image you have in node js server to client (react js)
 //https://stackoverflow.com/questions/48914987/send-image-path-from-node-js-express-server-to-react-client
 app.use('/uploads', express.static('uploads'));
+app.use('/uploadsample', express.static('uploadsample'));
 // app.use('/uploadsjson', express.static('uploadsjson'));
 //app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 app.use('/uploadsjson', express.static(path.join(__dirname, 'uploadsjson')))

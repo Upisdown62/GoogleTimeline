@@ -9,7 +9,7 @@ import RegisterPage from "./views/RegisterPage/RegisterPage.js";
 import TimelineEditPage from './views/Timeline/EditPage/TlEditPage'
 import TimelineUploadPage from './views/Timeline/UploadPage/TlUploadPage'
 import NavBar from "./views/NavBar/NavBar"
-import Footer from "./views/Footer/Footer"
+//import Footer from "./views/Footer/Footer"
 import './App.css'
 
 //null   Anyone Can go inside

@@ -2,6 +2,7 @@
 /build
 
 /uploads
+/uploadsample
 /uploadsjson
 
 dev.js

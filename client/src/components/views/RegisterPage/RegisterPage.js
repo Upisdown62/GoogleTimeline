@@ -109,12 +109,10 @@ function RegisterPage(props) {
           values,
           touched,
           errors,
-          dirty,
           isSubmitting,
           handleChange,
           handleBlur,
-          handleSubmit,
-          handleReset,
+          handleSubmit
         } = props;
         return (
           <div className="app">

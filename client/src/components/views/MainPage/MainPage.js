@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import MCalendar from '../../utils/MCalendar.js'
 import MVerticalTimeline from '../../utils/MVerticalTimeline.js'
 import Map from '../../utils/Map.js'
@@ -17,7 +17,7 @@ function MainPage() {
                 paddingTop: '10px',
                 background: '#ffffff'}}>
                 <div>당신의 동선을 기록해보세요!</div>
-                <div>{process.env.REACT_APP_SERVER_HOST}</div>
+                {/* <div>{process.env.REACT_APP_SERVER_HOST}</div> */}
                 <MCalendar/>
             </div>
             <div className="left-area"
@@ -26,7 +26,8 @@ function MainPage() {
                     position: 'fixed',
                     zIndex: 5}}>
                 <div style={{margin: '10px', display: 'inline-block'}}>
-                    <Map/>
+                    <Map
+                        useSample={true}/>
                 </div>
             </div>
             <div className="right-area"

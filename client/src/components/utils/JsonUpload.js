@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Dropzone from 'react-dropzone'
 import { Icon } from 'antd'
-import axios from 'axios'
 import DeleteIcon from '@material-ui/icons/Delete';
 
 

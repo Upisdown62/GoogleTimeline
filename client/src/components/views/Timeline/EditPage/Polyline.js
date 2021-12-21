@@ -13,7 +13,7 @@ function Polyline(props) {
     const { TextArea } = Input
     const [CurData, setCurData] = useState([])
     const [HeaderText, setHeaderText] = useState("")
-    const user = useSelector(state => state.user)
+    //const user = useSelector(state => state.user)
     const [Date, setDate] = useState("")
     const [Title, setTitle] = useState("")
     const [UseFlag, setUseFlag] = useState(false)

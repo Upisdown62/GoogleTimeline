@@ -29,7 +29,7 @@ function TlEditPage(props) {
     const user = useSelector(state => state.user)
 
     useEffect(() => {
-        if(user.userData) loadCalendar()
+        user.userData && loadCalendar()
     }, [user])
 
     useEffect(() => {
@@ -116,6 +116,7 @@ function TlEditPage(props) {
                     <Map
                         polyline={CurPolylineList}
                         updateSelectedIdx={onSetLine}
+                        useSample={false}
                     />
                 </div>
                 <div className="second-row-data">

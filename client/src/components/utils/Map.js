@@ -2,6 +2,8 @@
 import React, { useRef, useEffect, useState } from 'react'
 import _ from 'lodash';
 import { useSelector } from 'react-redux'
+import sampleData from '../../mock/sampleData'
+
 const { kakao } = window
 
 /*
@@ -68,6 +70,10 @@ function Map(props) {
         const map = new kakao.maps.Map(container, options)
         setMap(map)
     }, [])
+
+    useEffect(() => {
+        Map && props.useSample && setCurData(sampleData)
+    }, [Map])
 
     useEffect(() => {
         setCurData(props.polyline)
