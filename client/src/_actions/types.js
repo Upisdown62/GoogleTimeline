@@ -8,3 +8,6 @@ export const REMOVE_CART_ITEM = 'remove_cart_item';
 export const ON_SUCCESS_BUY = 'on_success_buy';
 
 export const LOAD_POLYLINE = 'load_polyline';
+
+export const LOADING_ON = 'loading_on';
+export const LOADING_OFF = 'loading_off';

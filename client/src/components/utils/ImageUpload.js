@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import Dropzone from 'react-dropzone'
 import { Icon } from 'antd'
-import axios from 'axios'
 import _ from 'lodash'
+import ApiService from '../../module/ApiService'
 
-function FileUpload(props) {
+function ImageUpload(props) {
     const [ImagePath, setImagePath] = useState([])
     const [DisabledFlag, setDisabledFlag] = useState(true)
 
@@ -27,23 +27,24 @@ function FileUpload(props) {
                 'Content-Type': 'multipart/form-data'
             }
         }
-        axios.post('/api/polyline/image', formData, config)
-        .then(response => {
-            if(response.data.success){
-                //console.log('>>> files', response.data.files)
-                let newImgPath = []
-                ImagePath.map((cur) => (
-                    newImgPath.push(cur)
-                ))
-                response.data.files.map((cur) => {
-                    newImgPath.push(`${process.env.REACT_APP_SERVER_HOST}/${cur.path}`)
-                })
-                //setImagePath(newImgPath)
-                props.updateImg(newImgPath)
-            } else{
-                alert('파일 저장 실패!')
-            }
-        })
+        
+        const res = ApiService.imageUpload(formData, config)
+        
+        if(res.data.success){
+            //console.log('>>> files', response.data.files)
+            let newImgPath = []
+            ImagePath.map((cur) => (
+                newImgPath.push(cur)
+            ))
+            res.data.files.map((cur) => {
+                newImgPath.push(`${process.env.REACT_APP_SERVER_HOST}/${cur.path}`)
+            })
+            //setImagePath(newImgPath)
+            //console.log('>>>>>>>> ImageUpload newImgPath', newImgPath)
+            props.updateImg(newImgPath)
+        } else{
+            alert('파일 저장 실패!')
+        }
     }
     
 
@@ -92,4 +93,4 @@ function FileUpload(props) {
     )
 }
 
-export default FileUpload
+export default ImageUpload

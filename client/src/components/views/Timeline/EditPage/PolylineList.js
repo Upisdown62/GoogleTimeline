@@ -5,8 +5,8 @@ import Moment from 'moment'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
 import { useSelector } from "react-redux";
-import axios from 'axios'
 import _ from 'lodash';
+import ApiService from '../../../../module/ApiService'
 
 const columns = [
   {
@@ -95,19 +95,17 @@ function PolylineList(props) {
     props.updateSelectedIdx(state.index)
   }
 
-  const onClickAllFalse = () => {
-    axios.post("/api/polyline/updateFlag", allUpdateList)
-    .then(response => {
-      if(response.data.success){
-          alert('데이터를 저장하였습니다!')
-          props.updateSave()
-      } else{
-          alert('데이터 저장에 실패했습니다!')
-      }
-    })
+  const onClickAllFalse = async() => {
+    const res = await ApiService.dataUpdateFlag(allUpdateList)
+    if(res.data.success){
+        alert('데이터를 저장하였습니다!')
+        props.updateSave()
+    } else{
+        alert('데이터 저장에 실패했습니다!')
+    }
   }
 
-  const handleChange = () => {
+  const handleChange = async() => {
     setUseDateFlag(!UseDateFlag)
 
     const body = {
@@ -115,16 +113,14 @@ function PolylineList(props) {
       date: CurDate,
       flag: !UseDateFlag
     }    
-    axios.post('/api/calendar/update', body)
-    .then(response => {
-      if(response.data.success){
-        //console.log(response.data.calendarInfo.date)
-        props.updateCalendar(response.data.calendarInfo.date)
-      }
-      else {
-        alert("데이터 업데이트에 실패했습니다!")
-      }
-    })
+    const res = await ApiService.updateCalendar(body)
+    if(res.data.success){
+      //console.log(response.data.calendarInfo.date)
+      props.updateCalendar(res.data.calendarInfo.date)
+    }
+    else {
+      alert("데이터 업데이트에 실패했습니다!")
+    }
   }
 
   return (

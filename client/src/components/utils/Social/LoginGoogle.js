@@ -1,8 +1,7 @@
 import React, { useRef } from 'react';
 import GoogleLogin from 'react-google-login';
-import axios from 'axios'
 import { useHistory } from "react-router";
-
+import ApiService from '../../../module/ApiService'
 
 function LoginGoogle(){
     const clientId = useRef(process.env.REACT_APP_GOOGLE_API_KEY)
@@ -20,24 +19,20 @@ function LoginGoogle(){
                 tokenId: token
             }
         }
-
-        axios.post('/api/google/login', body)
-        .then(response =>{
-            if (response.data.loginSuccess){
-                window.localStorage.setItem('userId', response.data.userId)
-                history.push("/")
-            } else{
-                //console.log(response.data)
-                history.push({
-                    pathname: "/register",
-                    state: { 
-                        email: response.data.email,
-                        social: response.data.social
-                    }
-                })
-            }
-        })
-        .catch(err => alert(err))
+        const res = await ApiService.googleLogin(body)
+        if (res.data.loginSuccess){
+            window.localStorage.setItem('userId', res.data.userId)
+            history.push("/")
+        } else{
+            //console.log(response.data)
+            history.push({
+                pathname: "/register",
+                state: { 
+                    email: res.data.email,
+                    social: res.data.social
+                }
+            })
+        }
     }
 
     const onFailure = (error) => {

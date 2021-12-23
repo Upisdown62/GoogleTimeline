@@ -3,11 +3,10 @@ import Map from '../../../utils/Map'
 import UCalendar from '../../../utils/UCalendar'
 import Polyline from '../EditPage/Polyline'
 import PolylineList from '../EditPage/PolylineList'
-import axios from 'axios'
 import Moment from 'moment'
 import { useSelector } from "react-redux";
 import './CTlEditPage.css'
-
+import ApiService from '../../../../module/ApiService'
 /*
 
     CurDate[Date]: UCalendar에서 선택한 날짜를 담고 있음
@@ -43,34 +42,30 @@ function TlEditPage(props) {
         setUpdateData(CurPolylineList.filter((cur) => cur.index === SelectedLine))
     }, [SelectedLine])
 
-    const loadCalendar = () => {
+    const loadCalendar = async() => {
         const body = {
             owner: user.userData._id
         }    
-        axios.post('/api/calendar', body)
-        .then(response => {
-            if(response.data.success && response.data.calendarInfo.length !== 0){
-                setCalendarDate(response.data.calendarInfo[0].date)
-            } else {
-                //alert("달력 데이터를 가져오는데 실패했습니다")
-            }
-        })
+        const res = await ApiService.getCalendar(body)
+        if(res.success && res.calendarInfo.length !== 0){
+            setCalendarDate(res.calendarInfo[0].date)
+        } else {
+            //alert("달력 데이터를 가져오는데 실패했습니다")
+        }
     }
     
-    const loadPolylineList = () => {
+    const loadPolylineList = async() => {
         const body = {
             owner: user.userData._id
         } 
         let inputDate = Moment(CurDate).format('YYYY-MM-DD')
-        axios.post(`/api/polyline/datas?date=${inputDate}`, body)
-        .then(response => {
-            //console.log('polylineInfo >> ', response.data.polylineInfo)
-            if(response.data.success){
-                setCurPolylineList(response.data.polylineInfo)
-            } else {
-                alert("데이터를 가져오는데 실패했습니다")
-            }
-        })
+        const res = await ApiService.loadPolyline(inputDate, body)
+        //console.log('polylineInfo >> ', res.data.polylineInfo)
+        if(res.success){
+            setCurPolylineList(res.polylineInfo)
+        } else {
+            alert("데이터를 가져오는데 실패했습니다")
+        }
     }
 
     const onSetCurDate = (newCurDate) => {

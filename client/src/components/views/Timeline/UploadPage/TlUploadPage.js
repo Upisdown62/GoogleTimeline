@@ -6,8 +6,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import JsonUpload from '../../../utils/JsonUpload'
-import axios from 'axios'
-
+import ApiService from '../../../../module/ApiService'
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />
@@ -33,7 +32,7 @@ function TlUploadPage(props) {
     setVaild(false)
   }
 
-  const handleVaildation = () => {
+  const handleVaildation = async() => {
     if(Files.length === 0) return
 
     for(let i = 0; i < Files.length; i++){
@@ -54,41 +53,37 @@ function TlUploadPage(props) {
             'Content-Type': 'multipart/form-data'
         }
     }
-    axios.post('/api/polyline/vaildation', formData, config)
-    .then(response => {
-      if(response.data.success){
-        let newPath = []
-        response.data.files.map((cur) => {
-          newPath.push(cur.path)
-        })
-        setFilePath(newPath)
-        //console.log('>>>>>>> newPath' ,newPath)
-        setVaild(true)
-    } else{
-        alert('파일 검증 오류!')
-      }
-    })
+    const res = await ApiService.dataVaildation(formData, config)
+    if(res.data.success){
+      let newPath = []
+      res.data.files.map((cur) => {
+        newPath.push(cur.path)
+      })
+      setFilePath(newPath)
+      //console.log('>>>>>>> newPath' ,newPath)
+      setVaild(true)
+    } else {
+      alert('파일 검증 오류!')
+    }
   }
   
 
-  const handleUpload = () => {
+  const handleUpload = async() => {
     const body = {
       filePath: FilePath,
       userId: props.user._id
     }
-    axios.post('/api/polyline/save', body)
-    .then(response => {
-      if(response.data.success){
-        alert(`${response.data.successCnt}건이 업로드 되었습니다!`)
-        setFiles([])
-        setFilePath([])
-        setOpen(false)
-        setVaild(false)
-      }
-      else {
-        alert('파일 업로드 실패!')
-      }
-    })
+    const res = await ApiService.dataSave(body)
+    if(res.data.success){
+      alert(`${res.data.successCnt}건이 업로드 되었습니다!`)
+      setFiles([])
+      setFilePath([])
+      setOpen(false)
+      setVaild(false)
+    }
+    else {
+      alert('파일 업로드 실패!')
+    }
   }
 
   const onSetFiles = (files) => {

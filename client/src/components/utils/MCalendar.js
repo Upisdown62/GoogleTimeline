@@ -7,7 +7,7 @@ import _ from 'lodash';
 import { useDispatch, useSelector } from 'react-redux'
 import { loadPolyline } from '../../_actions/polyline_action'
 import { ko } from 'date-fns/esm/locale'
-import axios from 'axios'
+import ApiService from '../../module/ApiService'
 import "react-datepicker/dist/react-datepicker.css"
 
 
@@ -36,24 +36,24 @@ function MCalendar() {
         dispatch(loadPolyline(inputDate, body))
     }
 
-    useEffect(() => {
+    const loadHighlight = async() => {
         let ownerId
         ownerId = _.get(user.userData, '_id')
         const body = {
             owner: ownerId
         }
-        ownerId && axios.post('/api/calendar', body)
-        .then(response => {
-            if(response.data.success && response.data.calendarInfo.length !== 0){
-                let tempArray = []
-                response.data.calendarInfo[0].date.map((cur) => {
-                    if(cur.useFlag) tempArray.push(new Date(cur.date))
-                })
-                setHighlightArray(tempArray)
-            } else {
-                //alert("달력 데이터를 가져오는데 실패했습니다")
-            }
-        })
+        const result = await ApiService.getCalendar(body)
+        if(result.success && result.calendarInfo.length !== 0){
+            let tempArray = []
+            result.calendarInfo[0].date.map((cur) => {
+                if(cur.useFlag) tempArray.push(new Date(cur.date))
+            })
+            setHighlightArray(tempArray)
+        }
+    }
+
+    useEffect(() => {
+        user.userData && loadHighlight()
     }, [user.userData])
 
 

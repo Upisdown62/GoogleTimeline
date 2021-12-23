@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Form, Input } from 'antd'
 import ImageUpload from '../../../utils/ImageUpload'
-import axios from 'axios'
 import _ from 'lodash'
-import { useSelector } from "react-redux"
 import { TimePicker } from 'antd'
 import Moment from 'moment'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
+import ApiService from '../../../../module/ApiService'
 
 function Polyline(props) {
     const { TextArea } = Input
@@ -45,7 +44,7 @@ function Polyline(props) {
     }, [CurData])
 
 
-    const submitHandler = (event) => {
+    const submitHandler = async(event) => {
         event.preventDefault() //확인눌렀을때 화면을 다시 그리지 않게 해줌
         const putStartTime = Date + " " + Moment(StartTime).format('HH:mm:ss')
         const putEndTime = Date + " " + Moment(EndTime).format('HH:mm:ss')
@@ -59,16 +58,14 @@ function Polyline(props) {
             description: Description,
             image:ImgPath
         }
-        axios.post("/api/polyline/update", body)
-        .then(response => {
-            if(response.data.success){
-                setCurData([response.data.timelineInfo])
-                props.updateSave(_.get(CurData[0], 'index'))
-                alert('데이터를 저장하였습니다!')
-            } else{
-                alert('데이터 저장에 실패했습니다!')
-            }
-        })
+        const res = await ApiService.dataUpdate(body)
+        if(res.data.success){
+            setCurData([res.data.timelineInfo])
+            props.updateSave(_.get(CurData[0], 'index'))
+            alert('데이터를 저장하였습니다!')
+        } else{
+            alert('데이터 저장에 실패했습니다!')
+        }        
     }
 
     const titleChangeHandler = (e) => {
