@@ -55,7 +55,7 @@ function MVerticalTimeline() {
             : 
             <>
               <div>
-                <div style={{margin: '10px'}}>
+                <div style={{margin: '10px', textAlign: 'center'}}>
                   샘플 데이터입니다!
                 </div>
                 <VerticalTimeline

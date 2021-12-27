@@ -63,6 +63,9 @@
 }
 
 @media (max-width: 767px) {
+  .menu {
+    height: 69px;
+  }
   .menu__mobile-button {
     display: inline-block !important;
   }
