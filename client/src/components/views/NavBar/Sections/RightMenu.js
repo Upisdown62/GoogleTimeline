@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import TlUploadPage from '../../Timeline/UploadPage/TlUploadPage'
 import ApiService from '../../../../module/ApiService'
 import Toggle from '../../../utils/Toggle'
+import { Link } from 'react-router-dom'
 
 function RightMenu(props) {
   const user = useSelector(state => state.user)
@@ -25,11 +26,13 @@ function RightMenu(props) {
     return (
       <Menu mode={props.mode}>
         <Menu.Item key="mail">
-          <a href="/login">Signin</a>
+          {/* <a href="/login">Signin</a> */}
+          <Link to="/login">Singin</Link>
         </Menu.Item>
 
         <Menu.Item key="app">
-          <a href="/register">Signup</a>
+          {/* <a href="/register">Signup</a> */}
+          <Link to="/register">Signup</Link>
         </Menu.Item>
         <Toggle/>
       </Menu>
@@ -40,7 +43,8 @@ function RightMenu(props) {
     return (
       <Menu mode={props.mode}>
         <Menu.Item key="tlEdit">
-          <a href="/timelineEdit">Timeline Edit</a>
+          {/* <a href="/timelineEdit">Timeline Edit</a> */}
+          <Link to="/timelineEdit">Timeline Edit</Link>
         </Menu.Item>
 
         <Menu.Item key="tlUpload">
@@ -67,7 +71,8 @@ function RightMenu(props) {
         </Menu.Item> */}
 
         <Menu.Item key="logout">
-          <a onClick={logoutHandler}>Logout</a>
+          {/* <a onClick={logoutHandler}>Logout</a> */}
+          <Link to="/" onClick={logoutHandler}>Logout</Link>
         </Menu.Item>
 
         <Toggle/>
