@@ -8,6 +8,14 @@
   background-color: white;
 }
 
+.menu__dark {
+  padding: 0 20px;
+  border-bottom: solid 1px #1d2328;
+  overflow: auto;
+  box-shadow: 0 0 30px #1d2328;
+  background-color: #1d2328;
+}
+
 .menu__logo {
   width: 150px;
   float: left;
@@ -21,6 +29,7 @@
 
 .menu__container .ant-menu-item {
   padding: 0px 5px;
+  vertical-align: baseline;
 }
 
 .menu__container .ant-menu-submenu-title {

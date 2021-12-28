@@ -50,6 +50,7 @@ function Map(props) {
     const [MarkerList, setMarkerList] = useState([])
     const container = useRef(null) //지도를 담을 영역의 DOM 레퍼런스
     const level = useRef(8)
+    const [MapSize, setMapSize] = useState(500)
     // const options = {
     //     //지도를 생성할 때 필요한 기본 옵션
     //     center: new kakaoAPI.LatLng(37.5559908, 126.9741218), //지도의 중심좌표.
@@ -69,6 +70,7 @@ function Map(props) {
 		}
         const map = new kakao.maps.Map(container, options)
         setMap(map)
+        props.size && setMapSize(props.size)
     }, [])
 
     useEffect(() => {
@@ -228,11 +230,11 @@ function Map(props) {
     }
 
     return (
-        <div>
+        <div style={{ width: `${MapSize}px`, height: `${MapSize}px` }}>
             <div
                 id="myMap"
                 className="map"
-                style={{ width: "500px", height: "500px" }}
+                style={{ width: '100%', height: '100%' }}
                 ref={container}
             ></div>
             {/* <button onClick={onTest}>

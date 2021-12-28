@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import MCalendar from '../../utils/MCalendar.js'
 import MVerticalTimeline from '../../utils/MVerticalTimeline.js'
 import Map from '../../utils/Map.js'
@@ -16,7 +16,8 @@ function MainPage() {
             <div className="left-area">
                 <div style={{margin: '10px', display: 'inline-block'}}>
                     <Map
-                        useSample={true}/>
+                        useSample={true}
+                        size={window.innerWidth > 1300 ? 500 : 350}/>
                 </div>
             </div>
             <div className="right-area">

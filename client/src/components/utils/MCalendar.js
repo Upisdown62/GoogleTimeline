@@ -64,7 +64,7 @@ function MCalendar() {
     }, [startDate])
 
     return (
-        <div style={{height: '270px'}}>
+        <div>
             <Button style={{width:'240px'}} variant="outlined" onClick={handleClick}>{Moment(startDate).format('yyyy-MM-DD')}</Button>
             {isOpen && (
                 <DatePicker 

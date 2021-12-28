@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import TlUploadPage from '../../Timeline/UploadPage/TlUploadPage'
 import ApiService from '../../../../module/ApiService'
+import Toggle from '../../../utils/Toggle'
 
 function RightMenu(props) {
   const user = useSelector(state => state.user)
@@ -30,6 +31,7 @@ function RightMenu(props) {
         <Menu.Item key="app">
           <a href="/register">Signup</a>
         </Menu.Item>
+        <Toggle/>
       </Menu>
     )
   } 
@@ -67,6 +69,8 @@ function RightMenu(props) {
         <Menu.Item key="logout">
           <a onClick={logoutHandler}>Logout</a>
         </Menu.Item>
+
+        <Toggle/>
       </Menu>
     )
   }
