@@ -2,10 +2,14 @@ import React, { useState } from 'react';
 import LeftMenu from './Sections/LeftMenu';
 import RightMenu from './Sections/RightMenu';
 import { Drawer, Button, Icon } from 'antd';
-import './Sections/Navbar.css';
+import './Sections/Navbar.scss';
 import { Link } from 'react-router-dom'
+import cx from 'classnames'
+import { useTheme } from '../../../hooks/useTheme'
+
 
 function NavBar() {
+  const { isDarkMode } = useTheme()
   const [visible, setVisible] = useState(false)
   const showDrawer = () => {
     setVisible(true)
@@ -16,7 +20,7 @@ function NavBar() {
   };
 
   return (
-    <nav className='menu' style={{ position: 'fixed', zIndex: 5, width: '100%' }}>
+    <div className={cx(isDarkMode ? 'menu__dark' : 'menu')} style={{ position: 'fixed', zIndex: 5, width: '100%', height: '69px'}}>
       <div className="menu__logo">
         {/* <a href="/">Logo</a> */}
         <Link to="/">Logo</Link>
@@ -47,7 +51,7 @@ function NavBar() {
           <RightMenu mode="inline" />
         </Drawer>
       </div>
-    </nav>
+    </div>
   )
 }
 

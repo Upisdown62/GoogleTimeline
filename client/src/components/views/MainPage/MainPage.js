@@ -4,6 +4,7 @@ import MVerticalTimeline from '../../utils/MVerticalTimeline.js'
 import Map from '../../utils/Map.js'
 import './MainPage.css'
 
+
 function MainPage() {
 
     return (

@@ -34,7 +34,10 @@ function RightMenu(props) {
           {/* <a href="/register">Signup</a> */}
           <Link to="/register">Signup</Link>
         </Menu.Item>
-        <Toggle/>
+
+        <Menu.Item key="toggle">
+          <Toggle/>
+        </Menu.Item>
       </Menu>
     )
   } 

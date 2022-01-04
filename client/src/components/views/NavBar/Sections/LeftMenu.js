@@ -7,10 +7,9 @@ import { Link } from 'react-router-dom'
 function LeftMenu(props) {
   return (
     <Menu mode={props.mode}>
-      <Menu.Item key="mail">
-        {/* <a href="/">Home</a> */}
+      {/* <Menu.Item key="mail">
         <Link to="/">Home</Link>
-      </Menu.Item>
+      </Menu.Item> */}
 
       {/* <Menu.Item key="tlGuide">
           <a href="/guide">Guide</a>
