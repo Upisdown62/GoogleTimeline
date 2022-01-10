@@ -42,7 +42,7 @@ function NavBar() {
         <Drawer
           title="Basic Drawer"
           placement="right"
-          className="menu_drawer"
+          className={cx(isDarkMode ? 'menu_drawer__dark' : 'menu_drawer')}
           closable={false}
           onClose={onClose}
           visible={visible}
