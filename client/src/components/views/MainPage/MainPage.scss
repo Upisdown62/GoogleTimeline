@@ -1,0 +1,62 @@
+@import '../../../theme/base.scss';
+
+@mixin main ( $backgroundColor, $textColor) {
+    width: 100%;
+    transition: background-color 0.3s;
+    .main-title {
+        text-align: center;
+        position: fixed;
+        width: 100%;
+        top: 69px;
+        z-index: 10;
+        height: 80px;
+        padding-top: 10px;
+        background: $backgroundColor;
+        color: $textColor;
+    }
+    
+    .left-area {
+        margin-top: 80px;
+        width: 40%;
+        float: left; 
+        text-align: center;
+        position: fixed;
+        z-index: 5;
+        background: $backgroundColor;
+        height: 100%;
+    }
+    
+    .right-area {
+        margin-top: 80px; 
+        width: 60%; 
+        float: right;
+        background: $backgroundColor;
+        color: $textColor;
+    }
+    @media (max-width: 1300px) {
+        .left-area {
+            margin-top: 80px;
+            width: 100%;
+            text-align: center;
+            position: fixed;
+            z-index: 5;
+            background: $backgroundColor;
+            height: 400px;
+        }
+        .right-area {
+            margin-top: 480px; 
+            width: 100%;
+            background: $backgroundColor;
+            color: $textColor;
+        }
+    }
+}
+.main {
+    @include main($color-white, $color-black);
+}
+
+.main_dark {
+    @include main($color-softBlack, $color-white);
+}
+
+

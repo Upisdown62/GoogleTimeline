@@ -1,10 +1,7 @@
 @import '~antd/dist/antd.css';
+@import '../../../../theme/base.scss';
 
-$color-white: #ffffff;
-$color-softWhite: #fffcd5ea;
-$color-black: #0e1316;
-$color-softBlack: #1e2429;
-$color-blue: #1890ff;
+
 
 @mixin menuLogo ( $backgroundColor, $textColor ) {
   transition: background-color 0.3s;
@@ -134,10 +131,10 @@ $color-blue: #1890ff;
   border-bottom: solid 1px $color-black;
   overflow: auto;
   background-color: $color-black;
-  @include menuLogo($color-black, $color-blue);
+  @include menuLogo($color-black, $color-blue); 
   @include menuMedia;
 }
 
 .menu_drawer__dark{
-  @include menuDrawer($color-softBlack, $color-black, $color-white);
+  @include menuDrawer($color-softBlack, $color-black, $color-blue);
 }

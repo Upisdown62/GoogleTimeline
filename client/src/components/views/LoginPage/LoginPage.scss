@@ -1,0 +1,25 @@
+@import '../../../theme/base.scss';
+
+@mixin register ( $backgroundColor, $textColor ) {
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    transition: background-color 0.3s;
+    background-color: $backgroundColor;
+    h2.ant-typography, .ant-typography h2{
+        color: $textColor;
+    }
+    .ant-form-item label {
+        color: $textColor;
+    }
+
+}
+.app{
+    @include register($color-white, $color-black);
+}
+
+.app_dark{
+    @include register($color-softBlack, $color-blue);
+}

@@ -5,12 +5,17 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { Form, Icon, Input, Button, Checkbox, Typography } from 'antd';
 import { useDispatch } from "react-redux";
-import LoginKakao from "../../utils/Social/LoginKakao"
+//import LoginKakao from "../../utils/Social/LoginKakao"
 import LoginGoogle from "../../utils/Social/LoginGoogle"
+import { Link } from 'react-router-dom'
+import { useTheme } from "../../../hooks/useTheme"
+import cx from 'classnames'
+import './LoginPage.scss'
 
 const { Title } = Typography;
 
 function LoginPage(props) {
+  const { isDarkMode } = useTheme();
   const dispatch = useDispatch();
   const rememberMeChecked = localStorage.getItem("rememberMe") ? true : false;
 
@@ -82,10 +87,10 @@ function LoginPage(props) {
           handleReset,
         } = props;
         return (
-          <div className="app">
+          <div className={cx(isDarkMode ? 'app_dark' : 'app')}>
 
             <Title level={2}>Log In</Title>
-            <form onSubmit={handleSubmit} style={{ width: '350px' }}>
+            <form onSubmit={handleSubmit} style={{ width: '80%' }}>
 
               <Form.Item required>
                 <Input
@@ -129,15 +134,15 @@ function LoginPage(props) {
 
               <Form.Item>
                 <Checkbox id="rememberMe" onChange={handleRememberMe} checked={rememberMe} >Remember me</Checkbox>
-                <a className="login-form-forgot" href="/reset_user" style={{ float: 'right' }}>
+                <Link className="login-form-forgot" to="/reset_user" style={{ float: 'right' }}>
                   forgot password
-                  </a>
+                  </Link>
                 <div>
                   <Button type="primary" htmlType="submit" className="login-form-button" style={{ minWidth: '100%' }} disabled={isSubmitting} onSubmit={handleSubmit}>
                     Log in
                 </Button>
                 </div>
-                Or <a href="/register">register now!</a>
+                <Link to="/register">register now!</Link>
               </Form.Item>
             </form>
             {/* <LoginKakao/> */}

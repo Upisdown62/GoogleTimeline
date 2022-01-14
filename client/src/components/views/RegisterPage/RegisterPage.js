@@ -5,6 +5,9 @@ import * as Yup from 'yup';
 import { registerUser } from "../../../_actions/user_actions";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
+import cx from 'classnames'
+import { useTheme } from '../../../hooks/useTheme'
+import './RegisterPage.scss'
 
 import {
   Form,
@@ -36,6 +39,7 @@ const tailFormItemLayout = {
 };
 
 function RegisterPage(props) {
+  const { isDarkMode } = useTheme()
   const dispatch = useDispatch();
   const history = useHistory()
 
@@ -115,9 +119,9 @@ function RegisterPage(props) {
           handleSubmit
         } = props;
         return (
-          <div className="app">
+          <div className={cx(isDarkMode ? 'app_dark' : 'app')}>
             <h2>Sign up</h2>
-            <Form style={{ minWidth: '375px' }} {...formItemLayout} onSubmit={handleSubmit} >
+            <Form style={{ minWidth: '80%' }} {...formItemLayout} onSubmit={handleSubmit} >
 
               <Form.Item required label="Name">
                 <Input
