@@ -134,9 +134,9 @@ function LoginPage(props) {
 
               <Form.Item>
                 <Checkbox id="rememberMe" onChange={handleRememberMe} checked={rememberMe} >Remember me</Checkbox>
-                <Link className="login-form-forgot" to="/reset_user" style={{ float: 'right' }}>
+                {/* <Link className="login-form-forgot" to="/reset_user" style={{ float: 'right' }}>
                   forgot password
-                  </Link>
+                  </Link> */}
                 <div>
                   <Button type="primary" htmlType="submit" className="login-form-button" style={{ minWidth: '100%' }} disabled={isSubmitting} onSubmit={handleSubmit}>
                     Log in

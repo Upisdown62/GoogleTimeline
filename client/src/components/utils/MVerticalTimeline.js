@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { VerticalTimeline, VerticalTimelineElement }  from 'react-vertical-timeline-component'
 import 'react-vertical-timeline-component/style.min.css'
 import MapIcon from '@material-ui/icons/Map'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import ImageSlider from '../utils/ImageSlider'
 import MCard from '../utils/MCard'
 import NoImage from '../../images/noImage.jpg'
 import sampleData from '../../mock/sampleData'
+import './MVerticalTimeline.scss'
 
 function MVerticalTimeline() {
   const polyline = useSelector(state => state.polyline.polyline)
@@ -37,11 +38,11 @@ function MVerticalTimeline() {
                       icon={<MapIcon />}
                       >
                         <div style={{height:'300px'}}>
-                          <div style={{float:'left', width:'300px', margin: '10px' }}>
+                          <div className="main-image-area">
                             {cur.image.length !== 0 ? <ImageSlider images={cur.image}/> : 
                             <img src={NoImage} alt="No Images!"/>}
                           </div>
-                          <div style={{float:'left',  width:'600px', margin: '10px'}}>
+                          <div className="main-card-area">
                             <MCard
                               polyline={cur}
                               />
@@ -68,10 +69,10 @@ function MVerticalTimeline() {
                       iconStyle={{ background: "rgb(33, 150, 243)", color: "#fff" }}
                       icon={<MapIcon />}>
                         <div style={{height:'300px'}}>
-                          <div style={{float:'left', width:'300px', margin: '10px' }}>
+                          <div className="main-image-area">
                             <ImageSlider images={cur.image}/>
                           </div>
-                          <div style={{float:'left',  width:'600px', margin: '10px'}}>
+                          <div className="main-card-area">
                             <MCard
                               polyline={cur}
                             />

@@ -8,7 +8,7 @@ function ImageSlider(props) {
             autoplay>
             {props.images.map((image, index) => (
                 <div key={index}>
-                    <img style={{width:'100%', maxHeight:'300px'}}
+                    <img style={{ width: window.innerWidth > 1300 ? '300px' : '200px'}}
                         src={`${image}`} alt=''/>
                 </div>
             ))}

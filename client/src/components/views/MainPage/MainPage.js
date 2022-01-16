@@ -19,7 +19,7 @@ function MainPage() {
                 <div style={{margin: '10px', display: 'inline-block'}}>
                     <Map
                         useSample={true}
-                        size={window.innerWidth > 1300 ? 500 : 350}/>
+                        size={window.innerWidth > 1300 ? 500 : 250}/>
                 </div>
             </div>
             <div className="right-area">

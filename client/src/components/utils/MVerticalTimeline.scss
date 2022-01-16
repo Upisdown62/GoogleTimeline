@@ -1,0 +1,26 @@
+@import '../../theme/base.scss';
+
+.main-image-area {
+    float:left;
+    width: 300px;
+    margin: 10px;
+}
+
+.main-card-area {
+    float:left;
+    width: 600px;
+    margin: 10px;
+}
+
+@media (max-width: 1300px) {
+    .main-image-area {
+        width: 200px;
+        > img {
+            width: 200px;
+        }
+    }
+    .main-card-area {
+        width: auto;
+        font-size: 12px;
+    }
+}

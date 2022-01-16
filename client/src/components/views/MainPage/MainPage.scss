@@ -1,6 +1,6 @@
 @import '../../../theme/base.scss';
 
-@mixin main ( $backgroundColor, $textColor) {
+@mixin main ( $backgroundColor, $contentColor, $textColor) {
     width: 100%;
     transition: background-color 0.3s;
     .main-title {
@@ -32,6 +32,10 @@
         float: right;
         background: $backgroundColor;
         color: $textColor;
+
+        .vertical-timeline--animate .vertical-timeline-element-content.bounce-in {
+            background-color: $contentColor;
+        }
     }
     @media (max-width: 1300px) {
         .left-area {
@@ -41,10 +45,10 @@
             position: fixed;
             z-index: 5;
             background: $backgroundColor;
-            height: 400px;
+            height: 300px;
         }
         .right-area {
-            margin-top: 480px; 
+            margin-top: 380px; 
             width: 100%;
             background: $backgroundColor;
             color: $textColor;
@@ -52,11 +56,11 @@
     }
 }
 .main {
-    @include main($color-white, $color-black);
+    @include main($color-white, $color-white, $color-black);
 }
 
 .main_dark {
-    @include main($color-softBlack, $color-white);
+    @include main($color-softBlack, $color-black, $color-white);
 }
 
 
