@@ -121,7 +121,7 @@ function RegisterPage(props) {
         return (
           <div className={cx(isDarkMode ? 'app_dark' : 'app')}>
             <h2>Sign up</h2>
-            <Form style={{ minWidth: '80%' }} {...formItemLayout} onSubmit={handleSubmit} >
+            <Form style={{ maxWidth: '400px', width: '80%'}} {...formItemLayout} onSubmit={handleSubmit} >
 
               <Form.Item required label="Name">
                 <Input

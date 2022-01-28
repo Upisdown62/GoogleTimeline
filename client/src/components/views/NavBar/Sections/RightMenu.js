@@ -1,24 +1,55 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react';
-import { Menu } from 'antd';
-import { withRouter } from 'react-router-dom';
-import { useSelector } from "react-redux";
+import React from 'react'
+import { Menu } from 'antd'
+import { withRouter } from 'react-router-dom'
+import { useSelector } from "react-redux"
 import TlUploadPage from '../../Timeline/UploadPage/TlUploadPage'
 import ApiService from '../../../../module/ApiService'
 import Toggle from '../../../utils/Toggle'
 import { Link } from 'react-router-dom'
+import { isMobile } from 'react-device-detect'
+import { useSnackbar } from 'notistack'
 
 function RightMenu(props) {
   const user = useSelector(state => state.user)
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar()
+
+  const handleSnackbar = () => {
+    const message = '해당 기능은 PC 환경을 이용해주세요!'
+    const snackbarKey = enqueueSnackbar(message, {
+      variant: 'error',
+      anchorOrigin: {
+        vertical: 'top',
+        horizontal: 'center'
+      },
+      autoHideDuration: 2000,
+      onClick: () => closeSnackbar(snackbarKey)
+    })
+  }
 
   const logoutHandler = async() => {
+    handleOnClose()
     const res = await ApiService.logoutUser()
     if (res.status === 200) {
-      props.history.push("/login");
+      props.history.push("/login")
     } else {
       alert('Log Out Failed')
     }
-  };
+  }
+
+  const handleOnClose = () => {
+    props.handleClose()
+  }
+
+  const handleEditPage = () => {
+    if(isMobile){
+      handleSnackbar()
+      props.history.push("/")
+    } else {
+      handleOnClose()
+      props.history.push("/timelineEdit")
+    }
+  }
   
 
   //로그인이 안된 상태
@@ -27,12 +58,12 @@ function RightMenu(props) {
       <Menu mode={props.mode}>
         <Menu.Item key="mail">
           {/* <a href="/login">Signin</a> */}
-          <Link to="/login">Singin</Link>
+          <Link to="/login" onClick={handleOnClose}>Singin</Link>
         </Menu.Item>
 
         <Menu.Item key="app">
           {/* <a href="/register">Signup</a> */}
-          <Link to="/register">Signup</Link>
+          <Link to="/register" onClick={handleOnClose}>Signup</Link>
         </Menu.Item>
 
         <Menu.Item key="toggle">
@@ -47,12 +78,13 @@ function RightMenu(props) {
       <Menu mode={props.mode}>
         <Menu.Item key="tlEdit">
           {/* <a href="/timelineEdit">Timeline Edit</a> */}
-          <Link to="/timelineEdit">Timeline Edit</Link>
+          <div onClick={handleEditPage}>Timeline Edit</div>
         </Menu.Item>
 
         <Menu.Item key="tlUpload">
           {/* <a href="/timelineUpload">Timeline Upload</a> */}
           <TlUploadPage
+            onClick={handleOnClose}
             user={user.userData}
             />
         </Menu.Item>
@@ -78,11 +110,13 @@ function RightMenu(props) {
           <Link to="/" onClick={logoutHandler}>Logout</Link>
         </Menu.Item>
 
-        <Toggle/>
+        <Menu.Item key="toggle">
+          <Toggle/>
+        </Menu.Item>
       </Menu>
     )
   }
 }
 
-export default withRouter(RightMenu);
+export default withRouter(RightMenu)
 

@@ -15,6 +15,7 @@ import Progress from './utils/Progress/Progress.js'
 import { useSelector } from 'react-redux'
 import './App.css'
 import { ThemeProvider } from '../theme/ThemeProvider'
+import { SnackbarProvider } from 'notistack'
 
 //null   Anyone Can go inside
 //true   only logged in user can go inside
@@ -25,23 +26,25 @@ function App() {
   const appLoading = useSelector(state => state.progress.loading)
 
   return (
-    <ThemeProvider>
-      <Suspense fallback={(<div>Loading...</div>)}>
-        <Progress show={appLoading}/>
-        <NavBar/>
-        <div style={{ paddingTop: '69px' }}>
-          <Switch>
-            <Route exact path="/" component={Auth(MainPage, null)} />
-            <Route exact path="/guide" component={Auth(GuidePage, null)} />
-            <Route exact path="/login" component={Auth(LoginPage, false)} />
-            <Route exact path="/register" component={Auth(RegisterPage, false)} />
-            <Route exact path="/timelineEdit" component={Auth(TimelineEditPage, true)} />
-            <Route exact path="/timelineUpload" component={Auth(TimelineUploadPage, true)} />
-          </Switch>
-        </div>
-        {/* <Footer /> */}
-      </Suspense>
-    </ThemeProvider>
+    <SnackbarProvider>
+      <ThemeProvider>
+        <Suspense fallback={(<div>Loading...</div>)}>
+          <Progress show={appLoading}/>
+          <NavBar/>
+          <div style={{ paddingTop: '69px' }}>
+            <Switch>
+              <Route exact path="/" component={Auth(MainPage, null)} />
+              <Route exact path="/guide" component={Auth(GuidePage, null)} />
+              <Route exact path="/login" component={Auth(LoginPage, false)} />
+              <Route exact path="/register" component={Auth(RegisterPage, false)} />
+              <Route exact path="/timelineEdit" component={Auth(TimelineEditPage, true)} />
+              <Route exact path="/timelineUpload" component={Auth(TimelineUploadPage, true)} />
+            </Switch>
+          </div>
+          {/* <Footer /> */}
+        </Suspense>
+      </ThemeProvider>
+    </SnackbarProvider>
   );
 }
 

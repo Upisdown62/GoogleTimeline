@@ -12,7 +12,7 @@ function LeftMenu(props) {
       </Menu.Item> */}
 
       {/* <Menu.Item key="tlGuide">
-          <a href="/guide">Guide</a>
+          <Link to="/guide">Test Page</Link>
         </Menu.Item> */}
       {/* <SubMenu title={<span>Blogs</span>}>
         <MenuItemGroup title="Item 1">

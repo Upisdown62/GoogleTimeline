@@ -90,7 +90,7 @@ function LoginPage(props) {
           <div className={cx(isDarkMode ? 'app_dark' : 'app')}>
 
             <Title level={2}>Log In</Title>
-            <form onSubmit={handleSubmit} style={{ width: '80%' }}>
+            <form onSubmit={handleSubmit} style={{  maxWidth: '400px', width: '80%' }}>
 
               <Form.Item required>
                 <Input

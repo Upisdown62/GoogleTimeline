@@ -20,6 +20,7 @@
     padding: 0px 5px;
     vertical-align: baseline;
     border-bottom: none;
+    color: $textColor;
   }
   
   .menu__container .ant-menu-submenu-title {
@@ -107,6 +108,10 @@
   }
   .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
     background-color: $headerColor; //눌러도 바뀌지 않게 동일색상으로
+  }
+  .ant-menu-item {
+    padding: 0;
+    color: $textColor;
   }
   .ant-menu-item > a {
     color: $textColor;

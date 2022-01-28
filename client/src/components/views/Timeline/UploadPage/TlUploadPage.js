@@ -7,6 +7,8 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import JsonUpload from '../../../utils/JsonUpload'
 import ApiService from '../../../../module/ApiService'
+import { isMobile } from 'react-device-detect'
+import { useSnackbar } from 'notistack'
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />
@@ -18,8 +20,27 @@ function TlUploadPage(props) {
   const [FilePath, setFilePath] = useState([])
   const [Vaild, setVaild] = useState(false)
 
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar()
+
+  const handleSnackbar = () => {
+    const message = '해당 기능은 PC 환경을 이용해주세요!'
+    const snackbarKey = enqueueSnackbar(message, {
+      variant: 'error',
+      anchorOrigin: {
+        vertical: 'top',
+        horizontal: 'center'
+      },
+      autoHideDuration: 2000,
+      onClick: () => closeSnackbar(snackbarKey)
+    })
+  }
+
   const handleClickOpen = () => {
-    setOpen(true)
+    if(isMobile){
+      handleSnackbar()
+    } else {
+      setOpen(true)
+    }
   }
 
   const handleClear = () => {
@@ -91,7 +112,7 @@ function TlUploadPage(props) {
   }
 
   return (
-    <div style={{padding: '10px 15px'}}>
+    <div>
       <div onClick={handleClickOpen}>
         Data Upload
       </div>
@@ -130,6 +151,7 @@ function TlUploadPage(props) {
           </Button>
         </DialogActions>
       </Dialog>
+      
     </div>
   )
 }
