@@ -6,7 +6,7 @@ import { registerUser } from "../../../_actions/user_actions";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import cx from 'classnames'
-import { useTheme } from '../../../hooks/useTheme'
+import { useTheme } from 'hooks/useTheme.ts'
 import './RegisterPage.scss'
 
 import {

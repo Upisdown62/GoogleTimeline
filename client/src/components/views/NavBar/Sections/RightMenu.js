@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Menu } from 'antd'
 import { withRouter } from 'react-router-dom'
 import { useSelector } from "react-redux"
@@ -53,7 +53,7 @@ function RightMenu(props) {
   
 
   //로그인이 안된 상태
-  if (user.userData && !user.userData.isAuth) {
+  if (user && user.userData && !user.userData.isAuth) {
     return (
       <Menu mode={props.mode}>
         <Menu.Item key="mail">
@@ -85,7 +85,7 @@ function RightMenu(props) {
           {/* <a href="/timelineUpload">Timeline Upload</a> */}
           <TlUploadPage
             onClick={handleOnClose}
-            user={user.userData}
+            user={user && user.userData}
             />
         </Menu.Item>
 

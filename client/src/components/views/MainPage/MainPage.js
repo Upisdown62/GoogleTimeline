@@ -4,7 +4,7 @@ import MVerticalTimeline from '../../utils/MVerticalTimeline.js'
 import Map from '../../utils/Map.js'
 import './MainPage.scss'
 import cx from 'classnames'
-import { useTheme } from '../../../hooks/useTheme'
+import { useTheme } from 'hooks/useTheme.ts'
 
 function MainPage() {
     const { isDarkMode } = useTheme()

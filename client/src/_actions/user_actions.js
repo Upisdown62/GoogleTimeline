@@ -32,7 +32,7 @@ export function loginUser(dataToSubmit){
     }
 }
 
-export function auth(data){
+export function auth(){
     // const request = axios.get(`${USER_SERVER}/auth`)
     // .then(response => response.data);
 

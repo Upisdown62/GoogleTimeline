@@ -14,13 +14,15 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import promiseMiddleware from 'redux-promise';
 import ReduxThunk from 'redux-thunk';
+import rootReducer from './module/redux/index.ts'
+import logger from 'redux-logger'
 
-const createStoreWithMiddleware = applyMiddleware(promiseMiddleware, ReduxThunk)(createStore);
+const createStoreWithMiddleware = applyMiddleware(promiseMiddleware, ReduxThunk, logger)(createStore);
 
 ReactDOM.render(
     <Provider
         store={createStoreWithMiddleware(
-            Reducer,
+            rootReducer,
             window.__REDUX_DEVTOOLS_EXTENSION__ &&
             window.__REDUX_DEVTOOLS_EXTENSION__()
         )}

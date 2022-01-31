@@ -1,16 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
-import { auth } from '../_actions/user_actions';
+import { auth } from '../module/redux/user';
 import { useSelector, useDispatch } from "react-redux";
 import ApiService from '../module/ApiService'
+import { userSelector } from 'module/redux/user'
 
 export default function (SpecificComponent, option, adminRoute = null) {
     function AuthenticationCheck(props) {
-
-        let user = useSelector(state => state.user);
+        let user = useSelector(userSelector);
         const dispatch = useDispatch();
 
         useEffect(() => {
+            console.log('>>>>>>> 항상 호출되나?!')
             //To know my current status, send Auth request 
             dispatch(auth()).then(response => {
                 //Not Loggined in Status 
@@ -41,5 +42,4 @@ export default function (SpecificComponent, option, adminRoute = null) {
     }
     return AuthenticationCheck
 }
-
 

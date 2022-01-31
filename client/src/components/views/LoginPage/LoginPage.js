@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 //import LoginKakao from "../../utils/Social/LoginKakao"
 import LoginGoogle from "../../utils/Social/LoginGoogle"
 import { Link } from 'react-router-dom'
-import { useTheme } from "../../../hooks/useTheme"
+import { useTheme } from 'hooks/useTheme.ts'
 import cx from 'classnames'
 import './LoginPage.scss'
 
@@ -154,6 +154,6 @@ function LoginPage(props) {
   );
 };
 
-export default withRouter(LoginPage);
+export default LoginPage;
 
 

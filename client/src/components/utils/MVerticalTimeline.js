@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux'
 import ImageSlider from '../utils/ImageSlider'
 import MCard from '../utils/MCard'
 import NoImage from '../../images/noImage.jpg'
-import sampleData from '../../mock/sampleData'
+import sampleData from '../../mock/sampleData.ts'
 import './MVerticalTimeline.scss'
 
 function MVerticalTimeline() {

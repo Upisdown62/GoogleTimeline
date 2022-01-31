@@ -39,22 +39,24 @@ function MCalendar() {
     const loadHighlight = async() => {
         let ownerId
         ownerId = _.get(user.userData, '_id')
-        const body = {
-            owner: ownerId
-        }
-        const result = await ApiService.getCalendar(body)
-        if(result.success && result.calendarInfo.length !== 0){
-            let tempArray = []
-            result.calendarInfo[0].date.map((cur) => {
-                if(cur.useFlag) tempArray.push(new Date(cur.date))
-            })
-            setHighlightArray(tempArray)
+        if(ownerId) {
+            const body = {
+                owner: ownerId
+            }
+            const result = await ApiService.getCalendar(body)
+            if(result.success && result.calendarInfo.length !== 0){
+                let tempArray = []
+                result.calendarInfo[0].date.map((cur) => {
+                    if(cur.useFlag) tempArray.push(new Date(cur.date))
+                })
+                setHighlightArray(tempArray)
+            }
         }
     }
 
     useEffect(() => {
-        user.userData && loadHighlight()
-    }, [user.userData])
+        user && user.userData && loadHighlight()
+    }, [user])
 
 
     useEffect(() => {

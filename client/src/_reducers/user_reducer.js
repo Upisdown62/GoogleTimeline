@@ -5,8 +5,20 @@ import {
     LOGOUT_USER
 } from '../_actions/types';
  
+const initialState = {
+    userData:{
+        isAuth: false,
+        error: false,
+        _id: '',
+        isAdmin: false,
+        email: '',
+        name: '',
+        role: 0,
+        image: ''
+    }
+}
 
-export default function(state={},action){
+export default function(state=initialState,action){
     switch(action.type){
         case REGISTER_USER:
             return {...state, register: action.payload }

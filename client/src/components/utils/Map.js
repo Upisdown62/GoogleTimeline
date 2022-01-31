@@ -2,7 +2,7 @@
 import React, { useRef, useEffect, useState } from 'react'
 import _ from 'lodash';
 import { useSelector } from 'react-redux'
-import sampleData from '../../mock/sampleData'
+import sampleData from '../../mock/sampleData.ts'
 
 const { kakao } = window
 
