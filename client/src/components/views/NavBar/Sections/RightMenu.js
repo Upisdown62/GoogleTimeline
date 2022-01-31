@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom'
 import { useSelector } from "react-redux"
 import TlUploadPage from '../../Timeline/UploadPage/TlUploadPage'
 import ApiService from '../../../../module/ApiService'
-import Toggle from '../../../utils/Toggle'
+import Toggle from 'components/utils/Toggle'
 import { Link } from 'react-router-dom'
 import { isMobile } from 'react-device-detect'
 import { useSnackbar } from 'notistack'

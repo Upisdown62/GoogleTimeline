@@ -1,6 +1,6 @@
 import React, { Suspense, useEffect } from 'react'
 import { Route, Switch } from "react-router-dom"
-import Auth from "../hoc/auth"
+//import Auth from "../hoc/auth"
 // pages for this product
 import MainPage from './views/MainPage/MainPage'
 import GuidePage from './views/Guide/GuidePage'
@@ -14,7 +14,7 @@ import Progress from './utils/Progress/Progress.js'
 //import store from '../_store/index'
 import { useSelector } from 'react-redux'
 import './App.css'
-import { ThemeProvider } from '../theme/ThemeProvider'
+import { ThemeProvider } from 'theme/ThemeProvider'
 import { SnackbarProvider } from 'notistack'
 import PrivateRoute from 'route/PrivateRoute'
 import PublicRoute from 'route/PublicRoute'

@@ -5,7 +5,7 @@ import { Drawer, Button, Icon } from 'antd'
 import './Sections/Navbar.scss'
 import { Link } from 'react-router-dom'
 import cx from 'classnames'
-import { useTheme } from 'hooks/useTheme.ts'
+import { useTheme } from 'hooks/useTheme'
 
 
 function NavBar() {

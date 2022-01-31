@@ -67,3 +67,8 @@ export interface MPolylineAction {
         polylineInfo: []
     }
 }
+
+export interface MTheme {
+    isDarkMode: boolean,
+    toggleDarkMode: () => void
+}
