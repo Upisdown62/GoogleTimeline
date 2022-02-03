@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect } from 'react'
 import { Menu } from 'antd'
-import { withRouter } from 'react-router-dom'
+import { withRouter, useHistory } from 'react-router-dom'
 import { useSelector } from "react-redux"
 import TlUploadPage from 'components/views/Timeline/UploadPage/TlUploadPage'
 import ApiService from '../../../../module/ApiService'
@@ -9,11 +9,19 @@ import Toggle from 'components/utils/Toggle'
 import { Link } from 'react-router-dom'
 import { isMobile } from 'react-device-detect'
 import { useSnackbar } from 'notistack'
+import { MenuMode } from 'antd/lib/menu'
+import { userSelector } from 'module/redux/user'
+import { MUser } from 'model/index'
 
-function RightMenu(props) {
-  const user = useSelector(state => state.user)
+interface IProps {
+  mode: MenuMode
+  handleClose: () => void
+}
+
+function RightMenu(props:IProps) {
+  const user : MUser = useSelector(userSelector)
   const { enqueueSnackbar, closeSnackbar } = useSnackbar()
-
+  const history = useHistory()
   const handleSnackbar = () => {
     const message = '해당 기능은 PC 환경을 이용해주세요!'
     const snackbarKey = enqueueSnackbar(message, {
@@ -30,11 +38,11 @@ function RightMenu(props) {
   const logoutHandler = async() => {
     handleOnClose()
     const res = await ApiService.logoutUser()
-    if (res.status === 200) {
-      props.history.push("/login")
-    } else {
-      alert('Log Out Failed')
-    }
+    history.push("/login")
+    // if (res.status === 200) {
+    // } else {
+    //   alert('Log Out Failed')
+    // }
   }
 
   const handleOnClose = () => {
@@ -44,10 +52,10 @@ function RightMenu(props) {
   const handleEditPage = () => {
     if(isMobile){
       handleSnackbar()
-      props.history.push("/")
+      history.push("/")
     } else {
       handleOnClose()
-      props.history.push("/timelineEdit")
+      history.push("/timelineEdit")
     }
   }
   
@@ -118,5 +126,4 @@ function RightMenu(props) {
   }
 }
 
-export default withRouter(RightMenu)
-
+export default RightMenu

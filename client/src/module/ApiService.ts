@@ -1,8 +1,9 @@
-import API from '../module/api'
+import API from './api'
 import { USER_SERVER, POLYLINE_SERVER, CALENDAR_SERVER } from 'components/Config'
+import { MResFileJson, MUploadJson, MIDPW, MResDataSave, MResLogin } from "model"
 
 export default {
-    registerUser(body){
+    registerUser(body: any){
         return new Promise(async(resolve, reject) => {
             try {
                 const result = await API.post(`${USER_SERVER}/register`, body)
@@ -12,7 +13,7 @@ export default {
             }
         })
     },
-    loginUser(body){
+    loginUser(body: MIDPW): Promise<MResLogin>{
         return new Promise(async(resolve, reject) => {
             try {
                 const result = await API.post(`${USER_SERVER}/login`, body)
@@ -42,7 +43,7 @@ export default {
             }
         })
     },
-    loadPolyline(date, body){
+    loadPolyline(date: any, body: any){
         return new Promise(async(resolve, reject) => {
             try {
                 const result = await API.post(`${POLYLINE_SERVER}/datas?date=${date}`, body)
@@ -52,7 +53,7 @@ export default {
             }
         })
     },
-    googleLogin(body){
+    googleLogin(body: any){
         return new Promise(async(resolve, reject) => {
             try {
                 const result = await API.post('/api/google/login', body)
@@ -62,7 +63,7 @@ export default {
             }
         })
     },
-    imageUpload(formData, config){
+    imageUpload(formData: any, config: any){
         return new Promise(async(resolve, reject) => {
             try {
                 const result = await API.post(`${POLYLINE_SERVER}/image`, formData, config)
@@ -72,7 +73,7 @@ export default {
             }
         })
     },
-    dataVaildation(formData, config){
+    dataVaildation(formData: any, config: any) : Promise<MResFileJson>{
         return new Promise(async(resolve, reject) => {
             try {
                 const result = await API.post(`${POLYLINE_SERVER}/vaildation`, formData, config)
@@ -82,17 +83,17 @@ export default {
             }
         })
     },
-    dataSave(body){
+    dataSave(body: MUploadJson) : Promise<MResDataSave>{
         return new Promise(async(resolve, reject) => {
             try {
                 const result = await API.post(`${POLYLINE_SERVER}/save`, body)
-                resolve(result)
+                resolve(result.data)
             } catch(error) {
                 reject(error)
             }
         })
     },
-    dataUpdate(body){
+    dataUpdate(body: any){
         return new Promise(async(resolve, reject) => {
             try {
                 const result = await API.post(`${POLYLINE_SERVER}/update`, body)
@@ -102,7 +103,7 @@ export default {
             }
         })
     },
-    dataUpdateFlag(body){
+    dataUpdateFlag(body: any){
         return new Promise(async(resolve, reject) => {
             try {
                 const result = await API.post(`${POLYLINE_SERVER}/updateFlag`, body)
@@ -112,7 +113,7 @@ export default {
             }
         })
     },
-    updateCalendar(body){
+    updateCalendar(body: any){
         return new Promise(async(resolve, reject) => {
             try {
                 const result = await API.post(`${CALENDAR_SERVER}/update`, body)
@@ -122,7 +123,7 @@ export default {
             }
         })
     },
-    getCalendar(body){   
+    getCalendar(body: any){   
         return new Promise(async(resolve, reject) => {
             try {
                 const result = await API.post(`${CALENDAR_SERVER}`, body)

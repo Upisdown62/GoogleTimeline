@@ -10,7 +10,7 @@ import ApiService from '../../../../module/ApiService'
 import { isMobile } from 'react-device-detect'
 import { useSnackbar } from 'notistack'
 import { TransitionProps } from '@material-ui/core/transitions';
-import { User, MResFileJson } from 'model/index'
+import { User, MResFileJson, MUploadJson, MResDataSave } from 'model/index'
 
 interface IProps {
   onClick: () => void,
@@ -101,13 +101,17 @@ const TlUploadPage:React.FC<IProps> = ({ user, onClick }): React.ReactElement =>
   
 
   const handleUpload = async() => {
-    const body = {
+    const body : MUploadJson = {
       filePath: FilePath,
       userId: user._id
     }
     const res = await ApiService.dataSave(body)
-    if(res.data.success){
-      alert(`${res.data.successCnt}건이 업로드 되었습니다!`)
+    handle(res)
+  }
+
+  const handle = (response:MResDataSave) => {
+    if(response.success){
+      alert(`${response.successCnt}건이 업로드 되었습니다!`)
       setFiles([])
       setFilePath([])
       setOpen(false)

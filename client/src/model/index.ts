@@ -90,6 +90,16 @@ export interface MFileJson {
     type: string
 }
 
+export interface MUploadJson {
+    filePath: string[],
+    userId: string
+}
+
+export interface MResDataSave {
+    success: boolean,
+    successCnt: number
+}
+
 export interface MResFileJson {
     success: boolean,
     files: MResFile[]
@@ -104,4 +114,14 @@ export interface MResFile {
     originalname: string,
     path: string,
     size: number
+}
+
+export interface MIDPW {
+    email: string,
+    password: string
+}
+
+export interface MResLogin {
+    loginSuccess: string,
+    userId: string
 }

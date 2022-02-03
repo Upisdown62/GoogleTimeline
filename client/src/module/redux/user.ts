@@ -9,8 +9,8 @@ const AUTH_USER = 'auth_user' as const
 const LOGOUT_USER = 'logout_user' as const
 
 //액션 생성함수
-export const registerUser = (dataToSubmit: MRegisterUser) => {
-    const request = ApiService.registerUser(dataToSubmit)
+export const registerUser = async(dataToSubmit: MRegisterUser) => {
+    const request = await ApiService.registerUser(dataToSubmit)
     
     return {
         type: REGISTER_USER,
@@ -18,8 +18,8 @@ export const registerUser = (dataToSubmit: MRegisterUser) => {
     }
 }
 
-export const loginUser = (dataToSubmit: MRegisterUser) => {
-    const request = ApiService.loginUser(dataToSubmit)
+export const loginUser = async(dataToSubmit: MRegisterUser) => {
+    const request = await ApiService.loginUser(dataToSubmit)
 
     return {
         type: LOGIN_USER,
@@ -36,8 +36,8 @@ export const auth = async() => {
     }
 }
 
-export const logoutUser = () => {
-    const request = ApiService.logoutUser()
+export const logoutUser = async() => {
+    const request = await ApiService.logoutUser()
 
     return {
         type: LOGOUT_USER,

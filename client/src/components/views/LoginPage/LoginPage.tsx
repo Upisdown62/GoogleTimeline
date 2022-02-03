@@ -1,32 +1,53 @@
-import React, { useState } from "react";
-import { withRouter } from "react-router-dom";
-import { loginUser } from "../../../_actions/user_actions";
-import { Formik } from 'formik';
-import * as Yup from 'yup';
-import { Form, Icon, Input, Button, Checkbox, Typography } from 'antd';
-import { useDispatch } from "react-redux";
+import React, { useState } from "react"
+import { useHistory, withRouter } from "react-router-dom"
+import { Formik } from 'formik'
+import * as Yup from 'yup'
+import { Form, Icon, Input, Button, Checkbox, Typography } from 'antd'
+import { useDispatch } from "react-redux"
 //import LoginKakao from "../../utils/Social/LoginKakao"
 import LoginGoogle from "../../utils/Social/LoginGoogle"
 import { Link } from 'react-router-dom'
-import { useTheme } from 'hooks/useTheme.ts'
+import { useTheme } from 'hooks/useTheme'
 import cx from 'classnames'
 import './LoginPage.scss'
+import { MIDPW, } from "model"
+import ApiService from "module/ApiService"
 
-const { Title } = Typography;
 
-function LoginPage(props) {
-  const { isDarkMode } = useTheme();
-  const dispatch = useDispatch();
-  const rememberMeChecked = localStorage.getItem("rememberMe") ? true : false;
+const { Title } = Typography
+
+function LoginPage() {
+  const history = useHistory()
+  const { isDarkMode } = useTheme()
+  const dispatch = useDispatch()
+  const rememberMeChecked = localStorage.getItem("rememberMe") ? true : false
 
   const [formErrorMessage, setFormErrorMessage] = useState('')
   const [rememberMe, setRememberMe] = useState(rememberMeChecked)
 
   const handleRememberMe = () => {
     setRememberMe(!rememberMe)
-  };
+  }
 
-  const initialEmail = localStorage.getItem("rememberMe") ? localStorage.getItem("rememberMe") : '';
+  const handleLogin = async(dataToSubmit : MIDPW) => {
+    const response = await ApiService.loginUser(dataToSubmit)
+
+    if(response.loginSuccess){
+      window.localStorage.setItem('userId', response.userId)
+      if (rememberMe === true) {
+        window.localStorage.setItem('rememberMe', response.userId)
+      } else {
+        localStorage.removeItem('rememberMe')
+      }
+      history.push("/")
+    } else {
+      alert("로그인에 실패하였습니다.")
+      history.push("/")
+    }
+  }
+
+  const initialEmail = localStorage.getItem("rememberMe") ? localStorage.getItem("rememberMe") : ""
+
 
   return (
     <Formik
@@ -44,34 +65,35 @@ function LoginPage(props) {
       })}
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
-          let dataToSubmit = {
-            email: values.email,
+          let dataToSubmit : MIDPW = {
+            email: values.email ? values.email : "",
             password: values.password
-          };
+          }
+          handleLogin(dataToSubmit)
 
-          dispatch(loginUser(dataToSubmit))
-            .then(response => {
-              //console.log('Login::post response', response)
-              if (response.payload.loginSuccess) {
-                window.localStorage.setItem('userId', response.payload.userId);
-                if (rememberMe === true) {
-                  window.localStorage.setItem('rememberMe', values.id);
-                } else {
-                  localStorage.removeItem('rememberMe');
-                }
-                props.history.push("/");
-              } else {
-                setFormErrorMessage('Check out your Account or Password again')
-              }
-            })
-            .catch(err => {
-              setFormErrorMessage('Check out your Account or Password again')
-              setTimeout(() => {
-                setFormErrorMessage("")
-              }, 3000);
-            });
-          setSubmitting(false);
-        }, 500);
+          // dispatch(loginUser(dataToSubmit))
+          //   .then(response => {
+          //     //console.log('Login::post response', response)
+          //     if (response.payload.loginSuccess) {
+          //       window.localStorage.setItem('userId', response.payload.userId)
+          //       if (rememberMe === true) {
+          //         window.localStorage.setItem('rememberMe', values.id)
+          //       } else {
+          //         localStorage.removeItem('rememberMe')
+          //       }
+          //       history.push("/")
+          //     } else {
+          //       setFormErrorMessage('Check out your Account or Password again')
+          //     }
+          //   })
+          //   .catch(err => {
+          //     setFormErrorMessage('Check out your Account or Password again')
+          //     setTimeout(() => {
+          //       setFormErrorMessage("")
+          //     }, 3000)
+          //   })
+          setSubmitting(false)
+        }, 500)
       }}
     >
       {props => {
@@ -85,12 +107,12 @@ function LoginPage(props) {
           handleBlur,
           handleSubmit,
           handleReset,
-        } = props;
+        } = props
         return (
           <div className={cx(isDarkMode ? 'app_dark' : 'app')}>
 
             <Title level={2}>Log In</Title>
-            <form onSubmit={handleSubmit} style={{  maxWidth: '400px', width: '80%' }}>
+            <form onSubmit={handleSubmit} style={{ maxWidth: '400px', width: '80%' }}>
 
               <Form.Item required>
                 <Input
@@ -98,7 +120,7 @@ function LoginPage(props) {
                   prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
                   placeholder="Enter your email"
                   type="email"
-                  value={values.email}
+                  value={values.email? values.email : ''}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   className={
@@ -148,12 +170,12 @@ function LoginPage(props) {
             {/* <LoginKakao/> */}
             <LoginGoogle/>
           </div>
-        );
+        )
       }}
     </Formik>
-  );
-};
+  )
+}
 
-export default LoginPage;
+export default LoginPage
 
 

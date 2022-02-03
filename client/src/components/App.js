@@ -1,6 +1,5 @@
 import React, { Suspense, useEffect } from 'react'
 import { Route, Switch } from "react-router-dom"
-//import Auth from "../hoc/auth"
 // pages for this product
 import MainPage from './views/MainPage/MainPage'
 import GuidePage from './views/Guide/GuidePage'

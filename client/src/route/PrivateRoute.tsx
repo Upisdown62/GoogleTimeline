@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import React from 'react'
+import { useSelector } from 'react-redux'
 import {
   Route,
   Redirect,
@@ -8,7 +8,6 @@ import {
 } from 'react-router-dom'
 import { userSelector } from 'module/redux/user'
 import { MUser } from 'model/index'
-import { auth } from 'module/redux/user'
 
 type RoutePageComponent =
   | React.ComponentType<RouteComponentProps<any>>
@@ -18,9 +17,10 @@ interface IProps {
 }
 
 const PrivateRoute: React.FC<IProps & RouteProps> = (props) => {
-    const dispatch = useDispatch()
+    //const dispatch = useDispatch()
     console.log('PrivateRoute:' + JSON.stringify(props))
-    dispatch(auth())
+    //dispatch(auth())
+    // auth를 또 dispatch하니까 user가 바뀌고 또 호출하고 무한루프에 빠짐
 
     const Page: RoutePageComponent = props.page
     
