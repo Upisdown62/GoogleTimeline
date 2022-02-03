@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import { Menu } from 'antd'
 import { withRouter } from 'react-router-dom'
 import { useSelector } from "react-redux"
-import TlUploadPage from '../../Timeline/UploadPage/TlUploadPage'
+import TlUploadPage from 'components/views/Timeline/UploadPage/TlUploadPage'
 import ApiService from '../../../../module/ApiService'
 import Toggle from 'components/utils/Toggle'
 import { Link } from 'react-router-dom'

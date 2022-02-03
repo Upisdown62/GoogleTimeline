@@ -72,3 +72,36 @@ export interface MTheme {
     isDarkMode: boolean,
     toggleDarkMode: () => void
 }
+
+export interface MProgress {
+    loading: boolean
+}
+
+export interface MProgressAction {
+    type: string,
+    payload: string
+}
+
+export interface MFileJson {
+    path: string,
+    lastModified: number,
+    name: string,
+    size: number,
+    type: string
+}
+
+export interface MResFileJson {
+    success: boolean,
+    files: MResFile[]
+}
+
+export interface MResFile {
+    destination: string,
+    encoding: string,
+    fieldname: string,
+    filename: string,
+    mimetype: string,
+    originalname: string,
+    path: string,
+    size: number
+}

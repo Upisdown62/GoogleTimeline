@@ -1,19 +1,21 @@
-import React, { useEffect, useState } from "react";
-import moment from "moment";
-import { Formik } from 'formik';
-import * as Yup from 'yup';
-import { registerUser } from "../../../_actions/user_actions";
-import { useDispatch } from "react-redux";
-import { useHistory } from "react-router";
+import React, { useEffect, useState } from "react"
+import moment from "moment"
+import { Formik } from 'formik'
+import * as Yup from 'yup'
+import { registerUser } from "../../../_actions/user_actions"
+import { useDispatch } from "react-redux"
+import { useHistory } from "react-router"
 import cx from 'classnames'
-import { useTheme } from 'hooks/useTheme.ts'
+import { useTheme } from 'hooks/useTheme'
 import './RegisterPage.scss'
+import { get } from 'lodash'
+
 
 import {
   Form,
   Input,
   Button,
-} from 'antd';
+} from 'antd'
 
 const formItemLayout = {
   labelCol: {
@@ -24,7 +26,7 @@ const formItemLayout = {
     xs: { span: 24 },
     sm: { span: 16 },
   },
-};
+}
 const tailFormItemLayout = {
   wrapperCol: {
     xs: {
@@ -36,11 +38,15 @@ const tailFormItemLayout = {
       offset: 8,
     },
   },
-};
+}
 
-function RegisterPage(props) {
+interface IProps {
+
+}
+
+function RegisterPage() {
   const { isDarkMode } = useTheme()
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
   const history = useHistory()
 
   const [SocialEmail, setSocialEmail] = useState('')
@@ -48,8 +54,8 @@ function RegisterPage(props) {
   
   useEffect(() => {
     if(history.location.state){
-      setSocialEmail(history.location.state.email)
-      setSocialType(history.location.state.social)
+      setSocialEmail(get(history.location.state, 'email'))
+      setSocialType(get(history.location.state, 'social'))
     }
   }, [history.location.state])
 
@@ -80,7 +86,7 @@ function RegisterPage(props) {
           .min(6, 'Password must be at least 6 characters')
           .required('Password is required'),
         confirmPassword: Yup.string()
-          .oneOf([Yup.ref('password'), null], 'Passwords must match')
+          .oneOf([Yup.ref('password'), ''], 'Passwords must match')
           .required('Confirm Password is required')
       })}
       onSubmit={(values, { setSubmitting }) => {
@@ -91,21 +97,16 @@ function RegisterPage(props) {
             email: SocialEmail ? SocialEmail : values.email,
             password: values.password,
             name: values.name,
-            lastname: values.lastname,
+            lastname: values.lastName,
             image: `http://gravatar.com/avatar/${moment().unix()}?d=identicon`,
             social: SocialType
-          };
+          }
 
-          dispatch(registerUser(dataToSubmit)).then(response => {
-            if (response.payload.success) {
-              props.history.push("/login");
-            } else {
-              console.log(response.payload.err)
-            }
-          })
+          dispatch(registerUser(dataToSubmit))
+          history.push("/login")          
 
-          setSubmitting(false);
-        }, 500);
+          setSubmitting(false)
+        }, 500)
       }}
     >
       {props => {
@@ -117,7 +118,7 @@ function RegisterPage(props) {
           handleChange,
           handleBlur,
           handleSubmit
-        } = props;
+        } = props
         return (
           <div className={cx(isDarkMode ? 'app_dark' : 'app')}>
             <h2>Sign up</h2>
@@ -210,17 +211,17 @@ function RegisterPage(props) {
               </Form.Item>
 
               <Form.Item {...tailFormItemLayout}>
-                <Button onClick={handleSubmit} type="primary" disabled={isSubmitting}>
+                <Button onClick={()=>handleSubmit()} type="primary" disabled={isSubmitting}>
                   Submit
                 </Button>
               </Form.Item>
             </Form>
           </div>
-        );
+        )
       }}
     </Formik>
-  );
-};
+  )
+}
 
 
 export default RegisterPage

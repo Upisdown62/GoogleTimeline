@@ -7,7 +7,7 @@ import GuidePage from './views/Guide/GuidePage'
 import LoginPage from './views/LoginPage/LoginPage'
 import RegisterPage from './views/RegisterPage/RegisterPage'
 import TimelineEditPage from './views/Timeline/EditPage/TlEditPage'
-import TimelineUploadPage from './views/Timeline/UploadPage/TlUploadPage'
+import TimelineUploadPage from 'components/views/Timeline/UploadPage/TlUploadPage'
 import NavBar from "./views/NavBar/NavBar"
 //import Footer from "./views/Footer/Footer"
 import Progress from './utils/Progress/Progress.js'
@@ -18,19 +18,20 @@ import { ThemeProvider } from 'theme/ThemeProvider'
 import { SnackbarProvider } from 'notistack'
 import PrivateRoute from 'route/PrivateRoute'
 import PublicRoute from 'route/PublicRoute'
+import { progressSelector } from 'module/redux/progress'
 //null   Anyone Can go inside
 //true   only logged in user can go inside
 //false  logged in user can't go inside
 
 function App() {
   //window.store = store
-  // const appLoading = useSelector(state => state.progress.loading)
+  const appLoading = useSelector(progressSelector)
 
   return (
     <SnackbarProvider>
       <ThemeProvider>
         <Suspense fallback={(<div>Loading...</div>)}>
-          {/* <Progress show={appLoading}/> */}
+          <Progress show={appLoading.loading}/>
           <NavBar/>
           <div style={{ paddingTop: '69px' }}>
             <Switch>

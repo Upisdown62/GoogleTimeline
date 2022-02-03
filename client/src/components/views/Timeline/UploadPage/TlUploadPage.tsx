@@ -9,16 +9,26 @@ import JsonUpload from '../../../utils/JsonUpload'
 import ApiService from '../../../../module/ApiService'
 import { isMobile } from 'react-device-detect'
 import { useSnackbar } from 'notistack'
+import { TransitionProps } from '@material-ui/core/transitions';
+import { User, MResFileJson } from 'model/index'
 
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />
-})
+interface IProps {
+  onClick: () => void,
+  user: User
+}
 
-function TlUploadPage(props) {
-  const [open, setOpen] = useState(false)
-  const [Files, setFiles] = useState([])
-  const [FilePath, setFilePath] = useState([])
-  const [Vaild, setVaild] = useState(false)
+const Transition = React.forwardRef(function Transition(
+  props: TransitionProps & { children?: React.ReactElement<any, any> },
+  ref: React.Ref<unknown>,
+) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
+const TlUploadPage:React.FC<IProps> = ({ user, onClick }): React.ReactElement => {
+  const [open, setOpen] = useState<boolean>(false)
+  const [Files, setFiles] = useState<File[]>([])
+  const [FilePath, setFilePath] = useState<string[]>([])
+  const [Vaild, setVaild] = useState<boolean>(false)
 
   const { enqueueSnackbar, closeSnackbar } = useSnackbar()
 
@@ -66,18 +76,19 @@ function TlUploadPage(props) {
     }
 
     let formData = new FormData()
-    for(let i = 0; i < Files.length; i++){
-        formData.append("file", Files[i])
-    }
+    for (let file of Files){
+      formData.append('file', file)
+    }    
+
     const config = {
         headers: {
             'Content-Type': 'multipart/form-data'
         }
     }
-    const res = await ApiService.dataVaildation(formData, config)
-    if(res.data.success){
-      let newPath = []
-      res.data.files.map((cur) => {
+    const res : MResFileJson = await ApiService.dataVaildation(formData, config)
+    if(res.success){
+      let newPath: string[] = []
+      res.files.map((cur) => {
         newPath.push(cur.path)
       })
       setFilePath(newPath)
@@ -92,7 +103,7 @@ function TlUploadPage(props) {
   const handleUpload = async() => {
     const body = {
       filePath: FilePath,
-      userId: props.user._id
+      userId: user._id
     }
     const res = await ApiService.dataSave(body)
     if(res.data.success){
@@ -107,7 +118,7 @@ function TlUploadPage(props) {
     }
   }
 
-  const onSetFiles = (files) => {
+  const onSetFiles = (files:File[]) => {
     setFiles(files)
   }
 

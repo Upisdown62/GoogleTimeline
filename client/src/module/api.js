@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
-import { loadingOn, loadingOff } from '../_actions/progress_action'
-import store from '../_store/index';
+import { loadingOn, loadingOff } from 'module/redux/progress'
+import store from 'module/redux/index';
 import { useSelector } from 'react-redux'
 /**
  * AXIOS 설정
@@ -32,7 +32,6 @@ API.interceptors.request.use(
 API.interceptors.response.use(
     (response) => {
         //response가 끝나면 off
-        //console.log('>>>>>>>>>> response')
         return response
     },
     (error) => {

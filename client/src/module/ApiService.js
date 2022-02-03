@@ -1,5 +1,5 @@
 import API from '../module/api'
-import { USER_SERVER, POLYLINE_SERVER, CALENDAR_SERVER } from '../components/Config.js'
+import { USER_SERVER, POLYLINE_SERVER, CALENDAR_SERVER } from 'components/Config'
 
 export default {
     registerUser(body){
@@ -76,7 +76,7 @@ export default {
         return new Promise(async(resolve, reject) => {
             try {
                 const result = await API.post(`${POLYLINE_SERVER}/vaildation`, formData, config)
-                resolve(result)
+                resolve(result.data)
             } catch(error) {
                 reject(error)
             }
