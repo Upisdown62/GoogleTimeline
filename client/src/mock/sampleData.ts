@@ -1,4 +1,6 @@
-const sampleData = [
+import { MResPolyline } from "model"
+
+const sampleData:MResPolyline[] = [
     {
       index: 0,
       title: "버거먹자",
@@ -19,8 +21,14 @@ const sampleData = [
       startTime: "2021-09-11 18:47:30",
       endTime: "2021-09-11 19:12:08",
       visitType: "MOVE",
-      actitiyType: "WALKING",
-      useFlag: true
+      activityType: "WALKING",
+      useFlag: true,
+      date: "2021-09-11",
+      _id: "sampleId", 
+      owner: "sampleOwner",
+      createdAt: "2021-09-11",
+      updatedAt: "2021-09-11",
+      address: "중구"
     },
     {
       index: 1,
@@ -36,8 +44,14 @@ const sampleData = [
       startTime: "2021-09-11 19:12:08",
       endTime: "2021-09-11 20:26:18",
       visitType: "STAY",
-      actitiyType: "",
-      useFlag: true
+      activityType: "",
+      useFlag: true,
+      date: "2021-09-11",
+      _id: "sampleId", 
+      owner: "sampleOwner",
+      createdAt: "2021-09-11",
+      updatedAt: "2021-09-11",
+      address: "중구"
     },
     {
       index: 2,
@@ -56,8 +70,14 @@ const sampleData = [
       startTime: "2021-09-11 20:26:18",
       endTime: "2021-09-11 21:23:45",
       visitType: "MOVE",
-      actitiyType: "WALKING",
-      useFlag: true
+      activityType: "WALKING",
+      useFlag: true,
+      date: "2021-09-11",
+      _id: "sampleId", 
+      owner: "sampleOwner",
+      createdAt: "2021-09-11",
+      updatedAt: "2021-09-11",
+      address: "중구"
     },
     {
       index: 3,
@@ -74,8 +94,14 @@ const sampleData = [
       startTime: "2021-09-11 21:23:45",
       endTime: "2021-09-11 21:47:20",
       visitType: "STAY",
-      actitiyType: "",
-      useFlag: true
+      activityType: "",
+      useFlag: true,
+      date: "2021-09-11",
+      _id: "sampleId", 
+      owner: "sampleOwner",
+      createdAt: "2021-09-11",
+      updatedAt: "2021-09-11",
+      address: "중구"
     }
   ]
 

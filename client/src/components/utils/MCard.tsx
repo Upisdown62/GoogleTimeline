@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { SmileOutlined, ReadOutlined, CompassOutlined, ScheduleOutlined } from '@ant-design/icons'
 import './MCard.css'
+import { MResPolyline } from 'model'
 
-function MCard(props) {
-    const [body, setbody] = useState()
+interface IProps {
+    polyline: MResPolyline
+}
+function MCard(props: IProps) {
+    const [body, setbody] = useState<MResPolyline>()
 
     useEffect(() => {
         setbody(props.polyline)

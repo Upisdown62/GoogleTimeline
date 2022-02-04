@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import Map from '../../../utils/Map'
 import UCalendar from '../../../utils/UCalendar'
-import Polyline from '../EditPage/Polyline'
-import PolylineList from '../EditPage/PolylineList'
+import Polyline from './Polyline'
+import PolylineList from './PolylineList'
 import Moment from 'moment'
-import { useSelector } from "react-redux";
+import { useSelector } from "react-redux"
 import './CTlEditPage.css'
-import ApiService from '../../../../module/ApiService'
+import ApiService from 'module/ApiService'
+import { userSelector } from 'module/redux/user'
+import { MCalendar, MResPolyline, MUser } from 'model'
+
 /*
 
     CurDate[Date]: UCalendar에서 선택한 날짜를 담고 있음
@@ -19,13 +22,17 @@ import ApiService from '../../../../module/ApiService'
 
     loadPolylineList: Calendar에서 선택된 날짜에 의해 변경되면, polyline API 호출
 */
-function TlEditPage(props) {
+interface IProps {
+    user: MUser
+}
+
+function TlEditPage(props:IProps) {
     const [CurDate, setCurDate] = useState(new Date())
-    const [CurPolylineList, setCurPolylineList] = useState([])
-    const [CalendarDate, setCalendarDate] = useState([])
-    const [SelectedLine, setSelectedLine] = useState(0)
-    const [UpdateData, setUpdateData] = useState()
-    const user = useSelector(state => state.user)
+    const [CurPolylineList, setCurPolylineList] = useState<MResPolyline[]>([])
+    const [CalendarDate, setCalendarDate] = useState<MCalendar[]>([])
+    const [SelectedLine, setSelectedLine] = useState<number>(0)
+    const [UpdateData, setUpdateData] = useState<MResPolyline[]>([])
+    const user:MUser = useSelector(userSelector)
 
     useEffect(() => {
         user.userData && loadCalendar()
@@ -68,19 +75,19 @@ function TlEditPage(props) {
         }
     }
 
-    const onSetCurDate = (newCurDate) => {
+    const onSetCurDate = (newCurDate: Date) => {
         setCurDate(newCurDate)
     }
 
-    const onSetLine = (newIdx) => {
+    const onSetLine = (newIdx: number) => {
         setSelectedLine(newIdx)
     }
 
-    const onSetCalendar = (newCalendar) => {
+    const onSetCalendar = (newCalendar: MCalendar[]) => {
         setCalendarDate(newCalendar)
     }
 
-    const onSaveHandler = (newIdx) => {
+    const onSaveHandler = (newIdx: number) => {
         loadPolylineList()
         setSelectedLine(newIdx)
     }

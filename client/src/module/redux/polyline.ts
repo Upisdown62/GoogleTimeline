@@ -30,5 +30,5 @@ export default function(state = initialState, action: MPolylineAction){
 }
 
 export const polylineSelector = (state: RootState) => {
-    return state.polyline
+    return state.polyline.polyline
 }

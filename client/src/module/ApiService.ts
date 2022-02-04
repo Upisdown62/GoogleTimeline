@@ -1,6 +1,6 @@
 import API from './api'
 import { USER_SERVER, POLYLINE_SERVER, CALENDAR_SERVER } from 'components/Config'
-import { MResFileJson, MUploadJson, MIDPW, MResDataSave, MResLogin, MResDataUpdate, MReqPolyline, MResCalendar, MResUpdateFlag, MResGoogleLogin, MReqGoogleLogin } from "model"
+import { MResFileJson, MUploadJson, MIDPW, MResDataSave, MResLogin, MResDataUpdate, MReqPolyline, MResCalendar, MResUpdateFlag, MResGoogleLogin, MReqGoogleLogin, MResCalendarArray, MResPolylineDate } from "model"
 
 export default {
     registerUser(body: any){
@@ -43,7 +43,7 @@ export default {
             }
         })
     },
-    loadPolyline(date: any, body: any){
+    loadPolyline(date: any, body: any) : Promise<MResPolylineDate>{
         return new Promise(async(resolve, reject) => {
             try {
                 const result = await API.post(`${POLYLINE_SERVER}/datas?date=${date}`, body)
@@ -63,11 +63,11 @@ export default {
             }
         })
     },
-    imageUpload(formData: any, config: any){
+    imageUpload(formData: FormData, config: any) : Promise<MResFileJson>{
         return new Promise(async(resolve, reject) => {
             try {
                 const result = await API.post(`${POLYLINE_SERVER}/image`, formData, config)
-                resolve(result)
+                resolve(result.data)
             } catch(error) {
                 reject(error)
             }
@@ -123,7 +123,7 @@ export default {
             }
         })
     },
-    getCalendar(body: any){   
+    getCalendar(body: any) : Promise<MResCalendarArray>{   
         return new Promise(async(resolve, reject) => {
             try {
                 const result = await API.post(`${CALENDAR_SERVER}`, body)

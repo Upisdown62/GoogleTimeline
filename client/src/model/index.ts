@@ -34,22 +34,22 @@ export interface MOwnerId {
 
 
 export interface MPolyline {
-    polyline: Polyline[]
+    polyline: MResPolyline[]
 }
 
-export interface Polyline {
+export interface MResPolyline {
     date: string,
-    title?: string,
-    description?: string,
-    image?: string[],
+    title: string,
+    description: string,
+    image: string[],
     useFlag: boolean,
     placeId?: string,
-    address?: string,
+    address: string,
     point: Point[],
-    name?: string,
+    name: string,
     startTime: string,
     endTime: string,
-    activityType?: string,
+    activityType: string,
     index: number,
     visitType: string,
     _id: string,
@@ -130,7 +130,9 @@ export interface MResLogin {
 
 export interface MResCalendar {
     success: boolean,
-    calendarInfo: MCalendar
+    calendarInfo: {
+        date: MCalendar[]
+    }
 }
 
 export interface MCalendar {
@@ -138,25 +140,13 @@ export interface MCalendar {
     date: Date
 }
 
-export interface MResPolyline {
-    activityType: string,
-    address: string,
-    createdAt: Date,
-    date: string,
-    description: string,
-    endTime: string,
-    image: string[],
-    index: number,
-    name: string,
-    owner: string,
-    placeId: string,
-    point: Point[],
-    startTime: string,
-    title: string,
-    updatedAt: Date,
-    useFlag: boolean,
-    visitType: string,
-    _id: string
+export interface MResCalendarArray {
+    success: boolean,
+    calendarInfo: MCalendarArray[]
+}
+
+export interface MCalendarArray {
+    date: MCalendar[]
 }
 
 export interface MResDataUpdate {
@@ -205,4 +195,27 @@ export interface MResGoogleLogin {
     userId: string,
     email?: string,
     social: string
+}
+
+export interface MMapPolyline {
+    map: any,
+    path: any[],
+    strokeWeight: number,
+    strokeColor: string,
+    strokeOpacity: number,
+    strokeStyle: string,
+    endArrow: boolean,
+    setMap: (m: any) => void
+}
+
+export interface MMapMarker {
+    map: any,
+    position: any,
+    title: string,
+    setMap: (m: any) => void
+}
+
+export interface MResPolylineDate {
+    success: boolean,
+    polylineInfo: MResPolyline[]
 }

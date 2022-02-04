@@ -3,14 +3,15 @@ import { VerticalTimeline, VerticalTimelineElement }  from 'react-vertical-timel
 import 'react-vertical-timeline-component/style.min.css'
 import MapIcon from '@material-ui/icons/Map'
 import { useSelector } from 'react-redux'
-import ImageSlider from '../utils/ImageSlider'
-import MCard from '../utils/MCard'
+import ImageSlider from './ImageSlider'
+import MCard from './MCard'
 import NoImage from '../../images/noImage.jpg'
-import sampleData from '../../mock/sampleData.ts'
+import sampleData from 'mock/sampleData'
 import './MVerticalTimeline.scss'
+import { polylineSelector } from 'module/redux/polyline'
 
 function MVerticalTimeline() {
-  const polyline = useSelector(state => state.polyline.polyline)
+  const polyline = useSelector(polylineSelector)
   const [isData, setIsData] = useState(false)
 
   useEffect(() => {
@@ -25,7 +26,7 @@ function MVerticalTimeline() {
         <div>
           {isData ? 
             <VerticalTimeline
-              layout='1-column-left'
+              layout='1-column'
               lineColor='rgb(33, 150, 243)'
               >
               {polyline.map((cur) => (
@@ -39,7 +40,7 @@ function MVerticalTimeline() {
                       >
                         <div style={{height:'300px'}}>
                           <div className="main-image-area">
-                            {cur.image.length !== 0 ? <ImageSlider images={cur.image}/> : 
+                            {cur.image && cur.image.length !== 0 ? <ImageSlider images={cur.image}/> : 
                             <img src={NoImage} alt="No Images!"/>}
                           </div>
                           <div className="main-card-area">
@@ -60,7 +61,7 @@ function MVerticalTimeline() {
                   샘플 데이터입니다!
                 </div>
                 <VerticalTimeline
-                  layout='1-column-left'
+                  layout='1-column'
                   lineColor='rgb(33, 150, 243)'>
                   {sampleData.map((cur) => (                    
                     <VerticalTimelineElement

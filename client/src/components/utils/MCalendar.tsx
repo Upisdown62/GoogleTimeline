@@ -9,20 +9,25 @@ import { loadPolyline } from '../../_actions/polyline_action'
 import { ko } from 'date-fns/esm/locale'
 import ApiService from '../../module/ApiService'
 import "react-datepicker/dist/react-datepicker.css"
+import { userSelector } from 'module/redux/user'
+import { MUser } from 'model'
 
 
 function MCalendar() {
     const dispatch = useDispatch()
-    const user = useSelector(state => state.user)
-    const [HighlightArray, setHighlightArray] = useState([])
-    const [startDate, setStartDate] = useState(new Date())
-    const [isOpen, setIsOpen] = useState(false)
-    const handleChange = (e) => {
+    const user: MUser = useSelector(userSelector)
+
+    const [HighlightArray, setHighlightArray] = useState<Date[]>([])
+    const [startDate, setStartDate] = useState<Date>(new Date())
+    const [isOpen, setIsOpen] = useState<boolean>(false)
+
+    const handleChange = (date: Date) => {
         setIsOpen(!isOpen)
-        setStartDate(e)
+        setStartDate(date)
     }
-    const handleClick = (e) => {
-        e.preventDefault()
+    // const handleClick = (e: React.MouseEventHandler<HTMLButtonElement>) => {
+        //e.preventDefault()
+    const handleClick = () => {
         setIsOpen(!isOpen)
     }
 
@@ -45,7 +50,7 @@ function MCalendar() {
             }
             const result = await ApiService.getCalendar(body)
             if(result.success && result.calendarInfo.length !== 0){
-                let tempArray = []
+                let tempArray : Date[] = []
                 result.calendarInfo[0].date.map((cur) => {
                     if(cur.useFlag) tempArray.push(new Date(cur.date))
                 })

@@ -1,7 +1,11 @@
 import React from 'react'
 import { Carousel } from 'antd'
 
-function ImageSlider(props) {
+interface IProps{
+    images: string[]
+}
+
+function ImageSlider(props : IProps) {
     return (
         <Carousel 
             dotPosition={'top'}

@@ -47,7 +47,7 @@ interface IProps {
   calendar: MCalendar[],
   date: Date,
   updateSelectedIdx: (n : number) => void,
-  updateCalendar: (d: Date) => void,
+  updateCalendar: (m: MCalendar[]) => void,
   updateSave: () => void
 }
 

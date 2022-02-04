@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import Dropzone from 'react-dropzone'
 import { Icon } from 'antd'
-import _ from 'lodash'
-import ApiService from '../../module/ApiService'
+import ApiService from 'module/ApiService'
 
-function ImageUpload(props) {
-    const [ImagePath, setImagePath] = useState([])
-    const [DisabledFlag, setDisabledFlag] = useState(true)
+interface IProps {
+    imgFlag: string,
+    imagePath: string[],
+    updateImg: (s: string[]) => void
+}
+
+function ImageUpload(props:IProps) {
+    const [ImagePath, setImagePath] = useState<string[]>([])
+    const [DisabledFlag, setDisabledFlag] = useState<boolean>(true)
 
     useEffect(() => {
         props.imgFlag === '# 항목을 선택하세요' ? setDisabledFlag(true) : setDisabledFlag(false)
@@ -17,7 +22,7 @@ function ImageUpload(props) {
         else setImagePath([])
     }, [props.imagePath])
 
-    const dropHandler = (files) => {
+    const dropHandler = async(files: File[]) => {
         let formData = new FormData()
         for(let i = 0; i < files.length; i++){
             formData.append("file", files[i])
@@ -28,15 +33,15 @@ function ImageUpload(props) {
             }
         }
         
-        const res = ApiService.imageUpload(formData, config)
+        const res = await ApiService.imageUpload(formData, config)
         
-        if(res.data.success){
+        if(res.success){
             //console.log('>>> files', response.data.files)
-            let newImgPath = []
+            let newImgPath: string[] = []
             ImagePath.map((cur) => (
                 newImgPath.push(cur)
             ))
-            res.data.files.map((cur) => {
+            res.files.map((cur) => {
                 newImgPath.push(`${process.env.REACT_APP_SERVER_HOST}/${cur.path}`)
             })
             //setImagePath(newImgPath)
@@ -48,7 +53,7 @@ function ImageUpload(props) {
     }
     
 
-    const deleteHandler = (cur) => {
+    const deleteHandler = (cur: string) => {
         props.updateImg(ImagePath.filter((key) => key !== cur))
     }
 

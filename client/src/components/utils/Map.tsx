@@ -1,10 +1,12 @@
 /* global kakao */
 import React, { useRef, useEffect, useState } from 'react'
-import _ from 'lodash';
+import { get } from 'lodash';
 import { useSelector } from 'react-redux'
-import sampleData from '../../mock/sampleData.ts'
+import sampleData from 'mock/sampleData'
+import { MMapMarker, MMapPolyline, MResPolyline } from 'model'
+import { polylineSelector } from 'module/redux/polyline'
 
-const { kakao } = window
+const { kakao } : any = window
 
 /*
     placeId: nullable
@@ -40,14 +42,21 @@ const MINLAT = 30
 const MAXLNG = 140
 const MINLNG = 120
 
-function Map(props) {
+interface IProps {
+    useSample: boolean,
+    size?: number, 
+    polyline?: MResPolyline[],
+    updateSelectedIdx?: (n : number) => void
+}
+
+function Map(props : IProps) {
     //const kakaoAPI = window.kakao.maps
-    const [Map, setMap] = useState()
-    const [CurData, setCurData] = useState()
-    const [CurPolylineIdx, setCurPolylineIdx] = useState()
+    const [Map, setMap] = useState<any>()
+    const [CurData, setCurData] = useState<MResPolyline[]>()
+    const [CurPolylineIdx, setCurPolylineIdx] = useState<number>()
     const [MapFlag, setMapFlag] = useState(false)
-    const [PolylineList, setPolylineList] = useState([])
-    const [MarkerList, setMarkerList] = useState([])
+    const [PolylineList, setPolylineList] = useState<MMapPolyline[]>([])
+    const [MarkerList, setMarkerList] = useState<MMapMarker[]>([])
     const container = useRef(null) //지도를 담을 영역의 DOM 레퍼런스
     const level = useRef(8)
     const [MapSize, setMapSize] = useState(500)
@@ -56,7 +65,7 @@ function Map(props) {
     //     center: new kakaoAPI.LatLng(37.5559908, 126.9741218), //지도의 중심좌표.
     //     level: level.current, //지도의 레벨(확대, 축소 정도)
     // }
-    const POLYLINE = useSelector(state => state.polyline.polyline)
+    const POLYLINE = useSelector(polylineSelector)
 
     // useEffect(() => {
     //     setMap(new kakaoAPI.Map(container.current, options)) //지도 생성 및 객체 리턴
@@ -95,7 +104,7 @@ function Map(props) {
 
     useEffect(() => {
         if(CurPolylineIdx && props.polyline) {
-            props.updateSelectedIdx(CurPolylineIdx)
+            props.updateSelectedIdx && props.updateSelectedIdx(CurPolylineIdx)
         }
     }, [CurPolylineIdx])
 
@@ -107,7 +116,7 @@ function Map(props) {
         setMapFlag(!MapFlag)
     }
     
-    const onCoordinateHandler = (x1, x2, y1, y2) => {
+    const onCoordinateHandler = (x1: number, x2: number, y1: number, y2: number) => {
         var lat = (x2+x1)/2
         var lng = (y2+y1)/2
         var chkLevel = (x2-x1) > (y2-y1) ? (x2-x1) : (y2-y1)
@@ -127,12 +136,12 @@ function Map(props) {
             Map.setCenter(new kakao.maps.LatLng(lat, lng))
         }
     }
-    const onTest = () => {
-        Map.setLevel(2, {animate: true})
-    }
+    // const onTest = () => {
+    //     Map.setLevel(2, {animate: true})
+    // }
     const onDrawMap = () => {
-        let tempPolyline = []
-        let tempMarker = []
+        let tempPolyline : MMapPolyline[] = []
+        let tempMarker : MMapMarker[] = []
 
         let minLat = 1000
         let maxLat = -1000
@@ -158,7 +167,7 @@ function Map(props) {
                 //marker.setMap(Map)
                 tempMarker.push(marker)
             } else {
-                let pathPoint = []
+                let pathPoint: any[] = []
                 cur.point.map((p) => {
                     pathPoint.push(new kakao.maps.LatLng(p.lat, p.lng))
 
@@ -168,22 +177,22 @@ function Map(props) {
                     minLng = p.lng < minLng ? p.lng : minLng
                 })
                 
-                let polylineColor// = '#' +  Math.round(Math.random() * 0xffffff).toString(16)
+                let polylineColor: string = ""// = '#' +  Math.round(Math.random() * 0xffffff).toString(16)
                 switch (cur.activityType) {
                     case "WALKING":
-                        polylineColor = _.get(lineColor, 'WALKING')
+                        polylineColor = get(lineColor, 'WALKING')
                         break
                     case "BUS":
-                        polylineColor = _.get(lineColor, 'BUS')
+                        polylineColor = get(lineColor, 'BUS')
                         break
                     case "SUBWAY":
-                        polylineColor = _.get(lineColor, 'SUBWAY')
+                        polylineColor = get(lineColor, 'SUBWAY')
                         break
                     case "RUNNING":
-                        polylineColor = _.get(lineColor, 'RUNNING')
+                        polylineColor = get(lineColor, 'RUNNING')
                         break
                     case "ETC":
-                        polylineColor = _.get(lineColor, 'ETC')
+                        polylineColor = get(lineColor, 'ETC')
                         break
                     default:
                         break;
@@ -198,7 +207,7 @@ function Map(props) {
                     endArrow: true
                 })                
                 
-                kakao.maps.event.addListener(polyline, 'mouseover', function(mouseEvent) {  
+                kakao.maps.event.addListener(polyline, 'mouseover', function() {  
                     polyline.setOptions({
                         strokeWeight: 10,
                         strokeColor: polylineColor,
@@ -207,7 +216,7 @@ function Map(props) {
                     })       
                 })
                 
-                kakao.maps.event.addListener(polyline, 'mouseout', function(mouseEvent) {  
+                kakao.maps.event.addListener(polyline, 'mouseout', function() {  
                     polyline.setOptions({
                         strokeWeight: 6,
                         strokeColor: polylineColor,
@@ -216,7 +225,7 @@ function Map(props) {
                     })
                 })
 
-                kakao.maps.event.addListener(polyline, 'click', function(mouseEvent) {  
+                kakao.maps.event.addListener(polyline, 'click', function() {  
                     setCurPolylineIdx(cur.index)        
                 })
                 tempPolyline.push(polyline)

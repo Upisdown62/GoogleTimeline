@@ -1,17 +1,22 @@
 import React, { useEffect, useState } from 'react'
 import Dropzone from 'react-dropzone'
 import { Icon } from 'antd'
-import DeleteIcon from '@material-ui/icons/Delete';
+import DeleteIcon from '@material-ui/icons/Delete'
+
+interface IProps {
+    initFiles: File[],
+    updateFiles: (f: File[]) => void
+}
 
 
-function FileUpload(props) {
-    const [Files, setFiles] = useState([])
+function FileUpload(props:IProps) {
+    const [Files, setFiles] = useState<File[]>([])
 
     useEffect(() => {
         setFiles(props.initFiles)
     }, [props.initFiles])
 
-    const dropHandler = (files) => {
+    const dropHandler = (files: File[]) => {
         let newFiles = [...Files]
         files.map((cur) => {
             newFiles.push(cur)
