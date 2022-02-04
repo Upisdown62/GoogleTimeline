@@ -4,9 +4,11 @@ import './CPolylineList.css'
 import Moment from 'moment'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
-import { useSelector } from "react-redux";
-import _ from 'lodash';
-import ApiService from '../../../../module/ApiService'
+import { useSelector } from "react-redux"
+import { get } from 'lodash'
+import ApiService from 'module/ApiService'
+import { userSelector } from 'module/redux/user'
+import { MResPolyline, MListPolyline, MCalendar, MUser } from 'model'
 
 const columns = [
   {
@@ -40,16 +42,25 @@ const columns = [
   }
 ]
 
-function PolylineList(props) {
-  const [CurPolylineList, setCurPolylineList] = useState()
-  const [CurDate, setCurDate] = useState()
-  const [UseDateFlag, setUseDateFlag] = useState(false) //해당날짜 사용여부 체크필드
-  const [DisableFlag, setDisableFlag] = useState(true) //데이터가 없으면 사용여부 체크필드를 비활성화
-  const [allUpdateList, setAllUpdateList] = useState([]) //일괄 비활성화를 위한 변수
-  const user = useSelector(state => state.user)
+interface IProps {
+  polyline: MResPolyline[],
+  calendar: MCalendar[],
+  date: Date,
+  updateSelectedIdx: (n : number) => void,
+  updateCalendar: (d: Date) => void,
+  updateSave: () => void
+}
+
+function PolylineList(props : IProps) {
+  const [CurPolylineList, setCurPolylineList] = useState<MListPolyline[]>([])
+  const [CurDate, setCurDate] = useState<string>()
+  const [UseDateFlag, setUseDateFlag] = useState<boolean>(false) //해당날짜 사용여부 체크필드
+  const [DisableFlag, setDisableFlag] = useState<boolean>(true) //데이터가 없으면 사용여부 체크필드를 비활성화
+  const [allUpdateList, setAllUpdateList] = useState<string[] | number[]>([]) //일괄 비활성화를 위한 변수
+  const user : MUser = useSelector(userSelector)
 
   useEffect(() => {
-    const data = []
+    const data : MListPolyline[] = []
     props.polyline && props.polyline.map((cur) => {
       if(cur.visitType==="MOVE"){
         data.push({
@@ -82,22 +93,22 @@ function PolylineList(props) {
     setCurDate(Moment(props.date).format('YYYY-MM-DD'))
     if(props.calendar){
       let findCalendar = props.calendar.filter((cur) => {
-        if(cur.date === Moment(props.date).format('YYYY-MM-DD')) return true
+        if(cur.date.toString() === Moment(props.date).format('YYYY-MM-DD')) return true
       })
       if(findCalendar) {
-        if(_.get(findCalendar[0], 'useFlag')) setUseDateFlag(true)
+        if(get(findCalendar[0], 'useFlag')) setUseDateFlag(true)
         else setUseDateFlag(false)
       }
     }
   }, [props.date])
 
-  const onRowClickHandler = (state) => {
+  const onRowClickHandler = (state:any) => {
     props.updateSelectedIdx(state.index)
   }
 
   const onClickAllFalse = async() => {
     const res = await ApiService.dataUpdateFlag(allUpdateList)
-    if(res.data.success){
+    if(res.success){
         alert('데이터를 저장하였습니다!')
         props.updateSave()
     } else{
@@ -114,9 +125,9 @@ function PolylineList(props) {
       flag: !UseDateFlag
     }    
     const res = await ApiService.updateCalendar(body)
-    if(res.data.success){
+    if(res.success){
       //console.log(response.data.calendarInfo.date)
-      props.updateCalendar(res.data.calendarInfo.date)
+      props.updateCalendar(res.calendarInfo.date)
     }
     else {
       alert("데이터 업데이트에 실패했습니다!")
@@ -170,7 +181,7 @@ function PolylineList(props) {
       }
     </div>
 
-  );
+  )
 }
 
 export default PolylineList

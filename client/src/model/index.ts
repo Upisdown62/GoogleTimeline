@@ -1,3 +1,5 @@
+import moment, { Moment } from "moment";
+
 export interface MRegisterUser {
     email: string,
     imgage?: string,
@@ -124,4 +126,83 @@ export interface MIDPW {
 export interface MResLogin {
     loginSuccess: string,
     userId: string
+}
+
+export interface MResCalendar {
+    success: boolean,
+    calendarInfo: MCalendar
+}
+
+export interface MCalendar {
+    useFlag: boolean,
+    date: Date
+}
+
+export interface MResPolyline {
+    activityType: string,
+    address: string,
+    createdAt: Date,
+    date: string,
+    description: string,
+    endTime: string,
+    image: string[],
+    index: number,
+    name: string,
+    owner: string,
+    placeId: string,
+    point: Point[],
+    startTime: string,
+    title: string,
+    updatedAt: Date,
+    useFlag: boolean,
+    visitType: string,
+    _id: string
+}
+
+export interface MResDataUpdate {
+    success: boolean,
+    timelineInfo: MResPolyline[]
+}
+
+export interface MReqPolyline {
+    id: string,
+    title: string,
+    useFlag : boolean,
+    name: string,
+    startTime: string,
+    endTime: string,
+    description: string,
+    image: string[]
+}
+
+export interface MListPolyline {
+    key: string,
+    index: number,
+    type: string,
+    from: string
+    to: string,
+    location: string,
+    useFlag: string
+}
+
+export interface MResUpdateFlag {
+    success: boolean
+}
+
+export interface MReqGoogleLogin {
+    data: {
+        profile: object,
+        tokenId: string
+    }
+}
+export interface MResGoogleTry {
+    profileObj: object,
+    tokenId: string
+}
+
+export interface MResGoogleLogin {
+    loginSuccess: boolean,
+    userId: string,
+    email?: string,
+    social: string
 }

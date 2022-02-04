@@ -1,26 +1,32 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Form, Input } from 'antd'
-import ImageUpload from '../../../utils/ImageUpload'
-import _ from 'lodash'
+import ImageUpload from 'components/utils/ImageUpload'
+import { get } from 'lodash'
 import { TimePicker } from 'antd'
 import Moment from 'moment'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
-import ApiService from '../../../../module/ApiService'
+import ApiService from 'module/ApiService'
+import { MResPolyline, MReqPolyline } from 'model'
 
-function Polyline(props) {
+interface IProps {
+    polyline: MResPolyline[],
+    updateSave: (n: number) => void
+}
+
+function Polyline(props: IProps) {
     const { TextArea } = Input
-    const [CurData, setCurData] = useState([])
-    const [HeaderText, setHeaderText] = useState("")
+    const [CurData, setCurData] = useState<MResPolyline[]>([])
+    const [HeaderText, setHeaderText] = useState<string>("")
     //const user = useSelector(state => state.user)
-    const [Date, setDate] = useState("")
-    const [Title, setTitle] = useState("")
+    const [Date, setDate] = useState<string>("")
+    const [Title, setTitle] = useState<string>("")
     const [UseFlag, setUseFlag] = useState(false)
-    const [Name, setName] = useState("")
-    const [StartTime, setStartTime] = useState()
-    const [EndTime, setEndTime] = useState()
-    const [Description, setDescription] = useState("")
-    const [ImgPath, setImgPath] = useState([])
+    const [Name, setName] = useState<string>("")
+    const [StartTime, setStartTime] = useState<Moment.Moment>()
+    const [EndTime, setEndTime] = useState<Moment.Moment>()
+    const [Description, setDescription] = useState<string>("")
+    const [ImgPath, setImgPath] = useState<string[]>([])
 
 
     useEffect(() => {
@@ -29,27 +35,26 @@ function Polyline(props) {
 
     useEffect(() => {
         if(CurData) {
-            //console.log('CurData >> ', CurData)
-            const tempIdx = _.get(CurData[0], 'index', '항목을 선택하세요')            
+            const tempIdx = get(CurData[0], 'index', '항목을 선택하세요')            
             setHeaderText(`# ${tempIdx}`)
-            setDate(_.get(CurData[0], 'date'))
-            setTitle(_.get(CurData[0], 'title'))
-            setUseFlag(_.get(CurData[0], 'useFlag', false))
-            setName(_.get(CurData[0], 'name'))
-            setStartTime(Moment(_.get(CurData[0], 'startTime', '00:00:00')))
-            setEndTime(Moment(_.get(CurData[0], 'endTime', '00:00:00')))
-            setDescription(_.get(CurData[0], 'description'))
-            setImgPath(_.get(CurData[0], 'image'))
+            setDate(get(CurData[0], 'date'))
+            setTitle(get(CurData[0], 'title'))
+            setUseFlag(get(CurData[0], 'useFlag', false))
+            setName(get(CurData[0], 'name'))            
+            setStartTime(Moment(get(CurData[0], 'startTime', '00:00:00')))
+            setEndTime(Moment(get(CurData[0], 'endTime', '00:00:00')))
+            setDescription(get(CurData[0], 'description'))
+            setImgPath(get(CurData[0], 'image'))
         }
     }, [CurData])
 
 
-    const submitHandler = async(event) => {
-        event.preventDefault() //확인눌렀을때 화면을 다시 그리지 않게 해줌
+    const submitHandler = async(e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault() //확인눌렀을때 화면을 다시 그리지 않게 해줌
         const putStartTime = Date + " " + Moment(StartTime).format('HH:mm:ss')
         const putEndTime = Date + " " + Moment(EndTime).format('HH:mm:ss')
-        const body = {
-            id: _.get(CurData[0], '_id'),
+        const body : MReqPolyline = {
+            id: get(CurData[0], '_id'),
             title: Title,
             useFlag: UseFlag,
             name: Name,
@@ -59,16 +64,16 @@ function Polyline(props) {
             image:ImgPath
         }
         const res = await ApiService.dataUpdate(body)
-        if(res.data.success){
-            setCurData([res.data.timelineInfo])
-            props.updateSave(_.get(CurData[0], 'index'))
+        if(res.success){
+            setCurData(res.timelineInfo)
+            props.updateSave(get(CurData[0], 'index'))
             alert('데이터를 저장하였습니다!')
         } else{
             alert('데이터 저장에 실패했습니다!')
         }        
     }
 
-    const titleChangeHandler = (e) => {
+    const titleChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         setTitle(e.currentTarget.value)
     }
 
@@ -76,23 +81,23 @@ function Polyline(props) {
         setUseFlag(!UseFlag)
     }
 
-    const nameChangeHandler = (e) => {
+    const nameChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         setName(e.currentTarget.value)
     }
 
-    const stChangeHandler = (time) => {
+    const stChangeHandler = (time: Moment.Moment) => {
         setStartTime(time)
     }
 
-    const etChangeHandler = (time) => {
+    const etChangeHandler = (time: Moment.Moment) => {
         setEndTime(time)
     }
 
-    const descChangeHandler = (e) => {
+    const descChangeHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setDescription(e.currentTarget.value)
     }
 
-    const updateImgHandler = (newImgPath) => {
+    const updateImgHandler = (newImgPath: string[]) => {
         setImgPath(newImgPath)
     }
     
@@ -142,19 +147,19 @@ function Polyline(props) {
                         </div>
 
                         <div style={{margin: "10px"}}>
-                            <div style={{display: 'inline-block', flaot:'left', width:'25%'}}>
+                            <div style={{display: 'inline-block', float:'left', width:'25%'}}>
                                 Start Time
                             </div>
-                            <div style={{display: 'inline-block', flaot:'left', width:'25%'}}>
+                            <div style={{display: 'inline-block', float:'left', width:'25%'}}>
                                 <TimePicker
                                     value={StartTime}
                                     onChange={stChangeHandler}
                                 />
                             </div>
-                            <div style={{display: 'inline-block', flaot:'left', width:'25%'}}>
+                            <div style={{display: 'inline-block', float:'left', width:'25%'}}>
                                 End Time
                             </div>
-                            <div style={{display: 'inline-block', flaot:'left', width:'25%'}}>
+                            <div style={{display: 'inline-block', float:'left', width:'25%'}}>
                                 <TimePicker
                                     value={EndTime}
                                     onChange={etChangeHandler}

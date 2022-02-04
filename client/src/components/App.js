@@ -9,7 +9,7 @@ import TimelineEditPage from './views/Timeline/EditPage/TlEditPage'
 import TimelineUploadPage from 'components/views/Timeline/UploadPage/TlUploadPage'
 import NavBar from "./views/NavBar/NavBar"
 //import Footer from "./views/Footer/Footer"
-import Progress from './utils/Progress/Progress.js'
+import Progress from './utils/Progress/Progress'
 //import store from '../_store/index'
 import { useSelector } from 'react-redux'
 import './App.css'

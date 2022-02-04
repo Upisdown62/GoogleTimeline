@@ -3,6 +3,9 @@ import { makeStyles } from '@material-ui/core/styles'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { useSelector } from 'react-redux'
 
+interface IProps {
+    show: boolean
+}
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -12,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-function Progress(props) {
+function Progress(props:IProps) {
     const classes = useStyles()
     useEffect(() => {
         //console.log('>>>>>>>> show', props.show)

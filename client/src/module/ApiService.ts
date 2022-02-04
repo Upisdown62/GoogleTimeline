@@ -1,6 +1,6 @@
 import API from './api'
 import { USER_SERVER, POLYLINE_SERVER, CALENDAR_SERVER } from 'components/Config'
-import { MResFileJson, MUploadJson, MIDPW, MResDataSave, MResLogin } from "model"
+import { MResFileJson, MUploadJson, MIDPW, MResDataSave, MResLogin, MResDataUpdate, MReqPolyline, MResCalendar, MResUpdateFlag, MResGoogleLogin, MReqGoogleLogin } from "model"
 
 export default {
     registerUser(body: any){
@@ -53,11 +53,11 @@ export default {
             }
         })
     },
-    googleLogin(body: any){
+    googleLogin(body: MReqGoogleLogin) : Promise<MResGoogleLogin>{
         return new Promise(async(resolve, reject) => {
             try {
                 const result = await API.post('/api/google/login', body)
-                resolve(result)
+                resolve(result.data)
             } catch(error) {
                 reject(error)
             }
@@ -93,31 +93,31 @@ export default {
             }
         })
     },
-    dataUpdate(body: any){
+    dataUpdate(body: MReqPolyline) : Promise<MResDataUpdate>{
         return new Promise(async(resolve, reject) => {
             try {
                 const result = await API.post(`${POLYLINE_SERVER}/update`, body)
-                resolve(result)
+                resolve(result.data)
             } catch(error) {
                 reject(error)
             }
         })
     },
-    dataUpdateFlag(body: any){
+    dataUpdateFlag(body: any) : Promise<MResUpdateFlag>{
         return new Promise(async(resolve, reject) => {
             try {
                 const result = await API.post(`${POLYLINE_SERVER}/updateFlag`, body)
-                resolve(result)
+                resolve(result.data)
             } catch(error) {
                 reject(error)
             }
         })
     },
-    updateCalendar(body: any){
+    updateCalendar(body: any) : Promise<MResCalendar>{
         return new Promise(async(resolve, reject) => {
             try {
                 const result = await API.post(`${CALENDAR_SERVER}/update`, body)
-                resolve(result)
+                resolve(result.data)
             } catch(error) {
                 reject(error)
             }
