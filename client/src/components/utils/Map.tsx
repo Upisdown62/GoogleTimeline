@@ -3,7 +3,7 @@ import React, { useRef, useEffect, useState } from 'react'
 import { get } from 'lodash';
 import { useSelector } from 'react-redux'
 import sampleData from 'mock/sampleData'
-import { MMapMarker, MMapPolyline, MResPolyline } from 'model'
+import { MMapMarker, MMapPolyline, MResPolyline, MPolyline } from 'model'
 import { polylineSelector } from 'module/redux/polyline'
 
 const { kakao } : any = window
@@ -65,7 +65,7 @@ function Map(props : IProps) {
     //     center: new kakaoAPI.LatLng(37.5559908, 126.9741218), //지도의 중심좌표.
     //     level: level.current, //지도의 레벨(확대, 축소 정도)
     // }
-    const POLYLINE = useSelector(polylineSelector)
+    const POLYLINE : MPolyline = useSelector(polylineSelector)
 
     // useEffect(() => {
     //     setMap(new kakaoAPI.Map(container.current, options)) //지도 생성 및 객체 리턴
@@ -91,7 +91,7 @@ function Map(props : IProps) {
     }, [props.polyline])
 
     useEffect(() => {
-        POLYLINE && setCurData(POLYLINE)
+        POLYLINE && setCurData(POLYLINE.polyline)
     }, [POLYLINE])
 
     useEffect(() => {

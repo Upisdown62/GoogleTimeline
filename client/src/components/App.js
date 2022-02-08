@@ -24,13 +24,13 @@ import { progressSelector } from 'module/redux/progress'
 
 function App() {
   //window.store = store
-  const appLoading = useSelector(progressSelector)
+  //const appLoading = useSelector(progressSelector)
 
   return (
     <SnackbarProvider>
       <ThemeProvider>
         <Suspense fallback={(<div>Loading...</div>)}>
-          <Progress show={appLoading.loading}/>
+          {/* <Progress show={appLoading.loading}/> */}
           <NavBar/>
           <div style={{ paddingTop: '69px' }}>
             <Switch>

@@ -9,16 +9,16 @@ import NoImage from '../../images/noImage.jpg'
 import sampleData from 'mock/sampleData'
 import './MVerticalTimeline.scss'
 import { polylineSelector } from 'module/redux/polyline'
+import { MResPolyline, MPolyline } from 'model'
 
 function MVerticalTimeline() {
-  const polyline = useSelector(polylineSelector)
+  const POLYLINE : MPolyline = useSelector(polylineSelector)
   const [isData, setIsData] = useState(false)
 
   useEffect(() => {
-    if(polyline && polyline.length !== 0) setIsData(true)
+    if(POLYLINE && POLYLINE.polyline.length !== 0) setIsData(true)
     else setIsData(false)
-    //console.log('>>> polyline', polyline)
-  }, [polyline])
+  }, [POLYLINE])
 
 
 
@@ -29,7 +29,7 @@ function MVerticalTimeline() {
               layout='1-column'
               lineColor='rgb(33, 150, 243)'
               >
-              {polyline.map((cur) => (
+              {POLYLINE.polyline.map((cur) => (
                 <>
                   {cur.useFlag === true ? 
                     <VerticalTimelineElement

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react"
 import moment from "moment"
 import { Formik } from 'formik'
 import * as Yup from 'yup'
-import { registerUser } from "../../../_actions/user_actions"
+import { registerUser } from 'module/redux/user'
 import { useDispatch } from "react-redux"
 import { useHistory } from "react-router"
 import cx from 'classnames'

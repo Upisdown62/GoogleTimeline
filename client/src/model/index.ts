@@ -65,9 +65,7 @@ export interface Point {
 
 export interface MPolylineAction {
     type: string,
-    payload: {
-        polylineInfo: []
-    }
+    payload: string
 }
 
 export interface MTheme {

@@ -5,7 +5,7 @@ import Moment from 'moment'
 import Button from '@mui/material/Button'
 import _ from 'lodash';
 import { useDispatch, useSelector } from 'react-redux'
-import { loadPolyline } from '../../_actions/polyline_action'
+import { loadPolyline } from 'module/redux/polyline'
 import { ko } from 'date-fns/esm/locale'
 import ApiService from '../../module/ApiService'
 import "react-datepicker/dist/react-datepicker.css"
@@ -31,14 +31,15 @@ function MCalendar() {
         setIsOpen(!isOpen)
     }
 
-    const load = () => {
+    const load = async() => {
         let ownerId
         ownerId = _.get(user.userData, '_id')
         const body = {
             owner: ownerId
         }
         let inputDate = Moment(startDate).format('YYYY-MM-DD')
-        dispatch(loadPolyline(inputDate, body))
+        const response = await ApiService.loadPolyline(inputDate, body)
+        response.success && dispatch(loadPolyline(response.polylineInfo))
     }
 
     const loadHighlight = async() => {

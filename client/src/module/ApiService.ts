@@ -1,6 +1,19 @@
 import API from './api'
 import { USER_SERVER, POLYLINE_SERVER, CALENDAR_SERVER } from 'components/Config'
-import { MResFileJson, MUploadJson, MIDPW, MResDataSave, MResLogin, MResDataUpdate, MReqPolyline, MResCalendar, MResUpdateFlag, MResGoogleLogin, MReqGoogleLogin, MResCalendarArray, MResPolylineDate } from "model"
+import { MResFileJson, 
+    MUploadJson, 
+    MIDPW, 
+    MResDataSave, 
+    MResLogin, 
+    MResDataUpdate, 
+    MReqPolyline, 
+    MResCalendar, 
+    MResUpdateFlag, 
+    MResGoogleLogin, 
+    MReqGoogleLogin, 
+    MResCalendarArray, 
+    MResPolylineDate, 
+    MOwnerId } from "model"
 
 export default {
     registerUser(body: any){
@@ -43,7 +56,7 @@ export default {
             }
         })
     },
-    loadPolyline(date: any, body: any) : Promise<MResPolylineDate>{
+    loadPolyline(date: string, body: MOwnerId) : Promise<MResPolylineDate>{
         return new Promise(async(resolve, reject) => {
             try {
                 const result = await API.post(`${POLYLINE_SERVER}/datas?date=${date}`, body)
